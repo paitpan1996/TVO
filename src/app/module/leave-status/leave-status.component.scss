@@ -1,0 +1,50 @@
+.card-color {
+    background-color: #00833F;
+    border-radius: 25px;
+}
+
+.color-white {
+    color: white;
+}
+
+.status {
+    color: #FFA900;
+    background-color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    width: 100%;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    padding-bottom: 0;
+}
+
+.approve {
+    color: white;
+    background-color: #00833F;
+    border: solid 2px white;
+    border-radius: 15px;
+    padding: 10px;
+    width: 100%;
+}
+
+.img-profile {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-send {
+    color: white;
+    background-color: #C92139;
+    border-radius: 5px;
+    padding: 0.5rem;
+    width: 90%;
+    border: none;
+}
+
+.textarea {
+    width: 100%;
+}

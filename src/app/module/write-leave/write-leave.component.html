@@ -1,0 +1,147 @@
+<div class="container-fluid">
+  <div class="row mt-4">
+    <div class="col-12">
+      <ng-select placeholder="ประเภทการลา..."></ng-select>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-3">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="type" id="type1" value="1" [(ngModel)]="type"/>
+        <label class="form-check-label" for="type1"> เต็มวัน </label>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="type" id="type2" value="2" [(ngModel)]="type"/>
+        <label class="form-check-label" for="type2"> ครึ่งวัน </label>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="type == '1'">
+    <div class="row mt-2">
+      <div class="col-6">
+        <input type="date" class="form-control" placeholder="วันเริ่ม" />
+      </div>
+      <div class="col-6">
+        <input type="date" class="form-control" placeholder="จนถึง" />
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="type == '2'">
+    <div class="row mt-2">
+      <div class="col-6">
+        <input type="time" class="form-control" placeholder="วันเริ่ม" />
+      </div>
+      <div class="col-6">
+        <input type="time" class="form-control" placeholder="จนถึง" />
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-12">
+        <input type="date" class="form-control" />
+      </div>
+    </div>
+  </ng-container>
+  <div class="row mt-2">
+    <div class="col-12">
+      <textarea class="form-control" rows="5" placeholder="เหตุผลการลา"></textarea>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-12">
+      <button class="btn-upload" (click)="fileUpload.click()">เอกสารแนบ</button>
+      <input type="file" (change)="getFile($event)" accept=".pdf" #fileUpload hidden/> <br />
+      <label class="small-text">รับรองไฟล์ PDF ขนาดไฟล์ต้องไม่เกิน 5 mb</label>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-12 text-center">
+      <button  type="button" class="btn-send" data-toggle="modal" data-target="#exampleModalCenter">
+        ส่งใบลา
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row mt-2 text-center">
+          <div class="col-12">
+            <h5>รายละเอียด</h5>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12 text-center">
+            <img src="../../../assets/GROUP.svg" />
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12 text-center">
+            <h5>ลาพักร้อน 5 วัน</h5>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12 text-center">
+            <h5>ไตรทิพย์ xxxxx</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col text-center">
+            <label class="small-text">คงเหลือ 3 วัน</label>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12 text-center">
+            <h5>ช่วงเวลา</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col text-center">
+            <label class="small-text">1/18/66 - 1/20/66</label>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12 text-center">
+            <h5>เหตุผลการลา</h5>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+              <label class="small-text">เที่ยว ตจว.</label>
+            </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12 text-center">
+            <h5>  <img src="../../../assets/tick-circle.svg" /> ผู้อนุมัติ</h5>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+              <label class="small-text">ไม่ได้หลับ ไม่ได้นอน</label>
+            </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12 text-center">
+            <h5>เอกสารแนบ</h5>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+              <label class="small-text">-</label>
+            </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-12 text-center">
+            <button type="button" class="btn-send" data-dismiss="modal" (click)="sendLeave()">
+              ยืนยันการส่ง
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

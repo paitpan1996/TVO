@@ -1,0 +1,80 @@
+.card-color {
+    background-color: #00833F;
+    border-radius: 25px;
+}
+
+.card-border {
+    border: solid 2px #00833F;
+    border-radius: 25px;
+}
+
+.color-white {
+    color: white;
+}
+
+.status {
+    color: #FFA900;
+    background-color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    width: 100%;
+}
+
+.approve {
+    color: white;
+    background-color: #00833F;
+    border: solid 2px white;
+    border-radius: 15px;
+    padding: 10px;
+    width: 100%;
+}
+
+.img-profile {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-history {
+    color: #00833F;
+    background-color: white;
+    border-radius: 5px;
+    padding: 0.5rem;
+    width: 100%;
+    border: none;
+}
+
+.btn-approve {
+    color: white;
+    background-color: #585858;
+    border-radius: 5px;
+    padding: 0.5rem;
+    width: 100%;
+    border: none;
+}
+
+.btn-date {
+    color: #00833F;
+    background-color: white;
+    border: solid 2px #00833F;
+    border-radius: 25px;
+    padding: 10px;
+    width: 40%;
+}
+
+.btn-send {
+    color: white;
+    background-color: #C92139;
+    border-radius: 5px;
+    padding: 0.5rem;
+    width: 90%;
+    border: none;
+}
+
+.textarea {
+    width: 100%;
+}
+
+.h-color {
+    color: #00833F;
+}

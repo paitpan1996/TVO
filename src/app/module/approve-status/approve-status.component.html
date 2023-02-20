@@ -1,0 +1,145 @@
+<div class="container-fluid">
+    <div class="row mt-2">
+        <div class="col d-flex justify-content-center">
+            <button class="btn-date"> ม.ค. 2566</button>
+        </div>
+    </div>
+    <ng-container *ngFor="let list of test">
+      <div class="card card-color mt-2">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-7 center">
+              <h5 class="card-title color-white">ไตรทิพย์ xxxxx</h5>
+            </div>
+            <div class="col-5">
+              <button class="status">รออนุมัติ</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 center">
+              <h5 class="card-title color-white">ลาพักร้อน 5 วัน</h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 center">
+              <h5 class="card-title color-white">1/12/66 - 1/15/66</h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <div class="row">
+                <div class="col-12">
+                  <h5 class="card-title color-white">เที่ยว ตจว.</h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <button class="approve">ผู้อนุมัติ : สุธาสินี</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 img-profile">
+              <img src="../../../assets/GROUP.svg" alt="" />
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12 d-flex justify-content-center">
+              <button class="btn-history" data-toggle="modal" data-target="#exampleModalCenter">ประวัติการลา</button>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-6 d-flex justify-content-center">
+              <button class="btn-approve" (click)="cilckApprove()"> <img src="../../../assets/tick-square.svg"> อนุมัติ</button>
+            </div>
+            <div class="col-6 d-flex justify-content-center">
+              <button class="btn-approve" data-toggle="modal" data-target="#exampleModalCenter1"> <img src="../../../assets/close-square.svg"> ไม่อนุมัติ</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+</div>
+
+  <!-- modal -->
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+            <div class="row mt-2">
+                <div class="col-12 text-center">
+                  <h5>ประวัติการลา</h5>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12 text-center">
+                <img src="../../../assets/GROUP.svg" />
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12 text-center">
+                <h5>ไตรทิพย์ xxxxx</h5>
+            </div>
+            </div>
+            <ng-container *ngFor="let list of test">
+                <div class="row mt-2">
+                    <div class="col">
+                        <div class="card card-border">
+                            <div class="card-body">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-2">
+                                        <img src="../../../assets/img-levea.svg">
+                                    </div>
+                                    <div class="col-9">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title h-color">{{list.name}}</h5>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <h6 class="card-subtitle mb-2 text-muted">คงเหลือ 3 วัน 0 ชัวโมง 0 นาที</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row mt-2">
+            <div class="col-12 text-center">
+              <img src="../../../assets/GROUP.svg" />
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12 text-center">
+              <h5>กรุณาระบุเหตุผลการไม่อนุมัติ</h5>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12 text-center">
+              <textarea class="form-coltrol textarea" placeholder="เหตุผลที่ไม่อนุมัติ" rows="5"></textarea>
+            </div>
+          </div>
+          <div class="row mt-5">
+            <div class="col-12 text-center">
+              <button type="button" class="btn-send" data-dismiss="modal" (click)="cilckNotApprove()">
+                บันทึก
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
