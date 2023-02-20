@@ -1,0 +1,43 @@
+<div class="container-fluid">
+  <div class="row mt-2">
+    <div class="col">
+      <div class="row mt-2">
+        <div class="col-12 text-center">
+          <h5>ประวัติการ{{ name }}</h5>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-12 text-center">
+          <img src="../../../assets/GROUP.svg" />
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-12 text-center">
+          <h5>{{ employeeName }}</h5>
+        </div>
+      </div>
+      <ng-container *ngFor="let list of test">
+        <div class="row mt-2">
+          <div class="col">
+            <table
+              id="dtHorizontalExample"
+              class="table table-striped table-bordered table-sm"
+              cellspacing="0"
+              width="100%"
+            >
+              <tbody>
+                <td class="b1">{{ employeeName }}</td>
+                <td>Digital Marketing</td>
+                <td>17 ม.ค. 2566 all-day</td>
+                <td>ผู้อนุมัติ: นาย นาทีเดียว เกือบสาย</td>
+                <td *ngIf="status == 'green'" class="green">รออนุมัติ</td>
+                <td *ngIf="status == 'yellow'" class="yellow">รออนุมัติ</td>
+                <td *ngIf="status == 'red'" class="red">รออนุมัติ</td>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

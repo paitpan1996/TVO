@@ -1,0 +1,48 @@
+<div class="container-fluid">
+    <div class="row mt-2">
+        <div class="col">
+            <div class="row mt-2">
+                <div class="col-12 text-center">
+                  <h5>ประวัติการลา</h5>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12 text-center">
+                <img src="../../../assets/GROUP.svg" />
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12 text-center">
+                <h5>{{name}}</h5>
+            </div>
+            </div>
+            <ng-container *ngFor="let list of test">
+                <div class="row mt-2">
+                    <div class="col">
+                        <div class="card card-border" (click)="viewDetail(list.name)">
+                            <div class="card-body">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-2">
+                                        <img src="../../../assets/img-levea.svg">
+                                    </div>
+                                    <div class="col-9">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title h-color">{{list.name}}</h5>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <h6 class="card-subtitle mb-2 text-muted">คงเหลือ 3 วัน 0 ชัวโมง 0 นาที</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>
