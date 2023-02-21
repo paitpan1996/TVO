@@ -73,7 +73,7 @@ setFromat() {
   for(let i = 0; i < this.leaveTypeName; i++) {
     if(this.leaveType == this.leaveTypeName[i].id) {
       this.leaveTypePreview = this.leaveTypeName[i].name;
-      console.log(this.leaveTypePreview);
+      // console.log(this.leaveTypePreview);
     }
   }
 

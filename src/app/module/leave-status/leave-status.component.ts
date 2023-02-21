@@ -30,7 +30,7 @@ export class LeaveStatusComponent implements OnInit {
           this.profile = profile;
           this.getInitLeaveData();
           this.requestLeaveStatus();
-          console.log(this.profile);
+          // console.log(this.profile);
         }).catch(console.error);
       }else{
         liff.login()
@@ -62,7 +62,7 @@ export class LeaveStatusComponent implements OnInit {
   
     this.leaveService.requestLeaveStatus(param).subscribe({
       next: (res: any) => {
-        console.log(res.leave);
+        // console.log(res.leave);
         for(let i = 0; i < res.leave.length; i++) {
           res.leave[i].start_time = moment(res.leave[i].start_time).format("YYYY-MM-DD");
           res.leave[i].end_time = moment(res.leave[i].end_time).format("YYYY-MM-DD");
@@ -71,13 +71,13 @@ export class LeaveStatusComponent implements OnInit {
           }
         }
         // this.dataLeave = res.leave;
-        console.log(this.dataLeave);
+        // console.log(this.dataLeave);
       }
     })
   }
 
   getDataUser(item: any) {
-    console.log(item);
+    // console.log(item);
     this.statusPreview = item
   }
 
@@ -90,7 +90,7 @@ export class LeaveStatusComponent implements OnInit {
     }
     this.leaveService.cancelLeave(param).subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         Swal.fire({
           position: 'center',
           icon: 'success',
