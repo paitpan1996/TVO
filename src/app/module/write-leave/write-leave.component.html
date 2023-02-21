@@ -1,63 +1,69 @@
 <div class="container-fluid">
   <div class="row mt-4">
     <div class="col-12">
-      <ng-select placeholder="ประเภทการลา..."></ng-select>
+      <ng-select placeholder="ประเภทการลา..."
+      [items]="leaveTypeName"
+      bindLabel="name"
+      bindValue="id"
+      [(ngModel)]="leaveType"></ng-select>
     </div>
   </div>
   <div class="row mt-2">
     <div class="col-3">
       <div class="form-check">
-        <input class="form-check-input" type="radio" name="type" id="type1" value="1" [(ngModel)]="type"/>
+        <input class="form-check-input" type="radio" name="type" id="type1" value="FULL" [(ngModel)]="type"/>
         <label class="form-check-label" for="type1"> เต็มวัน </label>
       </div>
     </div>
     <div class="col-3">
       <div class="form-check">
-        <input class="form-check-input" type="radio" name="type" id="type2" value="2" [(ngModel)]="type"/>
+        <input class="form-check-input" type="radio" name="type" id="type2" value="HALF" [(ngModel)]="type"/>
         <label class="form-check-label" for="type2"> ครึ่งวัน </label>
       </div>
     </div>
   </div>
-  <ng-container *ngIf="type == '1'">
+  <!-- <ng-container *ngIf="type == '1'"> -->
     <div class="row mt-2">
-      <div class="col-6">
-        <input type="date" class="form-control" placeholder="วันเริ่ม" />
+      <div class="col-12">
+        <input type="datetime-local" class="form-control" placeholder="วันเริ่ม" [(ngModel)]="startDate" />
       </div>
-      <div class="col-6">
-        <input type="date" class="form-control" placeholder="จนถึง" />
+      </div>
+      <div class="row mt-2">
+      <div class="col-12">
+        <input type="datetime-local" class="form-control" placeholder="จนถึง" [(ngModel)]="endDate" />
       </div>
     </div>
-  </ng-container>
-  <ng-container *ngIf="type == '2'">
+  <!-- </ng-container> -->
+  <!-- <ng-container *ngIf="type == '2'">
     <div class="row mt-2">
       <div class="col-6">
-        <input type="time" class="form-control" placeholder="วันเริ่ม" />
+        <input type="time" class="form-control" placeholder="ตั้งแต่" [(ngModel)]="startTime" />
       </div>
       <div class="col-6">
-        <input type="time" class="form-control" placeholder="จนถึง" />
+        <input type="time" class="form-control" placeholder="จนถึง" [(ngModel)]="endTime"/>
       </div>
     </div>
     <div class="row mt-2">
       <div class="col-12">
-        <input type="date" class="form-control" />
+        <input type="date" class="form-control" [(ngModel)]="date" />
       </div>
     </div>
-  </ng-container>
+  </ng-container> -->
   <div class="row mt-2">
     <div class="col-12">
-      <textarea class="form-control" rows="5" placeholder="เหตุผลการลา"></textarea>
+      <textarea class="form-control" rows="5" placeholder="เหตุผลการลา" [(ngModel)]="desc"></textarea>
     </div>
   </div>
   <div class="row mt-2">
     <div class="col-12">
       <button class="btn-upload" (click)="fileUpload.click()">เอกสารแนบ</button>
-      <input type="file" (change)="getFile($event)" accept=".pdf" #fileUpload hidden/> <br />
-      <label class="small-text">รับรองไฟล์ PDF ขนาดไฟล์ต้องไม่เกิน 5 mb</label>
+      <input type="file" (change)="getFile($event)" accept=".pdf, .png" #fileUpload hidden/> <br />
+      <label class="small-text">รับรองไฟล์ PDF หรือ PNG ขนาดไฟล์ต้องไม่เกิน 5 mb</label>
     </div>
   </div>
   <div class="row mt-5">
     <div class="col-12 text-center">
-      <button  type="button" class="btn-send" data-toggle="modal" data-target="#exampleModalCenter">
+      <button  type="button" class="btn-send" data-toggle="modal" data-target="#exampleModalCenter" (click)="setFromat()">
         ส่งใบลา
       </button>
     </div>
@@ -76,62 +82,71 @@
         </div>
         <div class="row mt-2">
           <div class="col-12 text-center">
-            <img src="../../../assets/GROUP.svg" />
+            <h5>{{profile ? profile.displayName : ''}}</h5>
           </div>
         </div>
         <div class="row mt-2">
-          <div class="col-12 text-center">
-            <h5>ลาพักร้อน 5 วัน</h5>
+          <div class="col-12">
+            <h5>{{leaveTypePreview}} 5 {{type == 'FULL' ? 'วัน' : 'ชั่วโมง'}}</h5>
           </div>
         </div>
-        <div class="row mt-2">
-          <div class="col-12 text-center">
-            <h5>ไตรทิพย์ xxxxx</h5>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col text-center">
+        <!-- <div class="row">
+          <div class="col-12">
             <label class="small-text">คงเหลือ 3 วัน</label>
           </div>
-        </div>
+        </div> -->
         <div class="row mt-2">
-          <div class="col-12 text-center">
+          <div class="col-12">
             <h5>ช่วงเวลา</h5>
           </div>
         </div>
-        <div class="row">
-          <div class="col text-center">
-            <label class="small-text">1/18/66 - 1/20/66</label>
+        <!-- <ng-container *ngIf="type == '1'"> -->
+          <div class="row">
+            <div class="col">
+              <label class="small-text">{{startDatePerview}} - {{endDatePreview}}</label>
+            </div>
           </div>
-        </div>
+        <!-- </ng-container> -->
+        <!-- <ng-container *ngIf="type == '2'">
+          <div class="row">
+            <div class="col">
+              <label class="small-text">{{startTime}} - {{endTime}}</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label class="small-text">{{date}}</label>
+            </div>
+          </div>
+        </ng-container> -->
         <div class="row mt-2">
-          <div class="col-12 text-center">
+          <div class="col-12">
             <h5>เหตุผลการลา</h5>
           </div>
         </div>
         <div class="row">
-            <div class="col text-center">
-              <label class="small-text">เที่ยว ตจว.</label>
+            <div class="col">
+              <label class="small-text">{{desc ? desc : 'ไม่ได้ระบุเหตุผล'}}</label>
             </div>
         </div>
         <div class="row mt-2">
-          <div class="col-12 text-center">
+          <div class="col-12">
             <h5>  <img src="../../../assets/tick-circle.svg" /> ผู้อนุมัติ</h5>
           </div>
         </div>
         <div class="row">
-            <div class="col text-center">
-              <label class="small-text">ไม่ได้หลับ ไม่ได้นอน</label>
+            <div class="col">
+              <label class="small-text"></label>
             </div>
         </div>
         <div class="row mt-2">
-          <div class="col-12 text-center">
+          <div class="col-12">
             <h5>เอกสารแนบ</h5>
           </div>
         </div>
         <div class="row">
-            <div class="col text-center">
-              <label class="small-text">-</label>
+            <div class="col">
+              <label class="small-text">{{filePreview ? filePreview : 'ไม่ได้แนบไฟล์'}}</label>
             </div>
         </div>
         <div class="row mt-5">

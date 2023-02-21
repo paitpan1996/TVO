@@ -1,6 +1,6 @@
 <div class="container-fluid">
-  <ng-container>
-    <div class="card card-color mt-2" data-toggle="modal" data-target="#exampleModalCenter">
+  <ng-container *ngFor="let item of dataLeave">
+    <div class="card card-color mt-2" data-toggle="modal" data-target="#exampleModalCenter" (click)="getDataUser(item)">
       <div class="card-body">
         <div class="row">
           <div class="col-7 center">
@@ -12,24 +12,24 @@
         </div>
         <div class="row">
           <div class="col-12 center">
-            <h5 class="card-title color-white">1/12/66 - 1/15/66</h5>
+            <h5 class="card-title color-white">{{item.start_time}} - {{item.end_time}}</h5>
           </div>
         </div>
         <div class="row">
           <div class="col-6">
             <div class="row">
               <div class="col-12">
-                <h5 class="card-title color-white">เที่ยว ตจว.</h5>
+                <h5 class="card-title color-white">{{item.reason}}</h5>
               </div>
             </div>
             <div class="row">
               <div class="col-12">
-                <button class="approve">ผู้อนุมัติ : สุธาสินี</button>
+                <button class="approve">ผู้อนุมัติ : {{item.leave_approvals[0]?.employee.name_th}}</button>
               </div>
             </div>
           </div>
           <div class="col-6 img-profile">
-            <img src="../../../assets/GROUP.svg" alt="" />
+            <img class="img-profile" src="{{profile ? profile.pictureUrl : ''}}" alt="" />
           </div>
         </div>
       </div>
@@ -48,68 +48,69 @@
             </div>
           </div>
           <div class="row mt-2">
-            <div class="col-12 text-center">
-              <img src="../../../assets/GROUP.svg" />
+            <div class="col-12 d-flex justify-content-center">
+              <img class="img-profile" src="{{profile ? profile.pictureUrl : ''}}" />
             </div>
           </div>
           <div class="row mt-2">
-            <div class="col-12 text-center">
-              <h5>ไตรทิพย์ xxxxx</h5>
+            <div class="col-12">
+              <h5>{{profile ? profile.displayName : ''}}</h5>
             </div>
           </div>
           <div class="row mt-2">
-            <div class="col-12 text-center">
+            <div class="col-12">
               <h5>ลาพักร้อน 5 วัน</h5>
             </div>
           </div>
           <div class="row">
-            <div class="col text-center">
-              <label class="small-text">คงเหลือ 3 วัน</label>
+            <div class="col">
+              <label class="small-text">คงเหลือ 3 ชั่วโมง</label>
             </div>
           </div>
           <div class="row mt-2">
-            <div class="col-12 text-center">
+            <div class="col-12">
               <h5>ช่วงเวลา</h5>
             </div>
           </div>
           <div class="row">
-            <div class="col text-center">
-              <label class="small-text">1/18/66 - 1/20/66</label>
+            <div class="col">
+              <label class="small-text">{{statusPreview?.start_time}} - {{statusPreview?.end_time}}</label>
             </div>
           </div>
           <div class="row mt-2">
-            <div class="col-12 text-center">
+            <div class="col-12">
               <h5>เหตุผลการลา</h5>
             </div>
           </div>
           <div class="row">
-              <div class="col text-center">
-                <label class="small-text">เที่ยว ตจว.</label>
+              <div class="col">
+                <label class="small-text">{{statusPreview?.reason}}</label>
               </div>
           </div>
           <div class="row mt-2">
-            <div class="col-12 text-center">
-              <h5>  <img src="../../../assets/tick-circle.svg" /> ผู้อนุมัติ</h5>
+            <div class="col-12">
+              <h5>  <img src="../../../assets/tick-circle.svg" /> ผู้อนุมัติ : {{statusPreview?.leave_approvals[0]?.employee.name_th}}</h5>
             </div>
           </div>
           <div class="row">
-              <div class="col text-center">
-                <label class="small-text">ไม่ได้หลับ ไม่ได้นอน</label>
+              <div class="col">
+                <label class="small-text"></label>
               </div>
           </div>
           <div class="row mt-2">
-            <div class="col-12 text-center">
+            <div class="col-12">
               <h5>เอกสารแนบ</h5>
             </div>
           </div>
           <div class="row">
-              <div class="col text-center">
-                <label class="small-text">-</label>
+              <div class="col">
+                <label class="small-text">{{statusPreview?.file ? statusPreview?.file : 'ไม่ได้แนบไฟล์'}}</label>
               </div>
           </div>
           <div class="row mt-5">
             <div class="col-12 text-center">
-              <button type="button" class="btn-send" data-dismiss="modal" data-toggle="modal" data-target="#exampleModalCenter1" >
+              <!-- data-dismiss="modal" data-toggle="modal" data-target="#exampleModalCenter1" -->
+              <button type="button" class="btn-send" (click)="send()">
                 ยกเลิกการลา
               </button>
             </div>
@@ -136,7 +137,7 @@
           </div>
           <div class="row mt-2">
             <div class="col-12 text-center">
-              <textarea class="form-coltrol textarea" placeholder="เหตุผลที่ยกเลิกการลา" rows="5"></textarea>
+              <textarea class="form-coltrol textarea" placeholder="เหตุผลที่ยกเลิกการลา" rows="5" [(ngModel)]="note"></textarea>
             </div>
           </div>
           <div class="row mt-5">

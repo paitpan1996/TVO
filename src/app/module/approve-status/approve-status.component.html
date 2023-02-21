@@ -4,12 +4,12 @@
             <button class="btn-date"> ม.ค. 2566</button>
         </div>
     </div>
-    <ng-container *ngFor="let list of test">
+    <ng-container *ngFor="let list of dataLeave">
       <div class="card card-color mt-2">
         <div class="card-body">
           <div class="row">
             <div class="col-7 center">
-              <h5 class="card-title color-white">ไตรทิพย์ xxxxx</h5>
+              <h5 class="card-title color-white">{{list.leave.employee?.name_th}}</h5>
             </div>
             <div class="col-5">
               <button class="status">รออนุมัติ</button>
@@ -22,37 +22,38 @@
           </div>
           <div class="row">
             <div class="col-12 center">
-              <h5 class="card-title color-white">1/12/66 - 1/15/66</h5>
+              <h5 class="card-title color-white">{{list.leave.start_time}} - {{list.leave.end_time}}</h5>
             </div>
           </div>
           <div class="row">
             <div class="col-6">
               <div class="row">
                 <div class="col-12">
-                  <h5 class="card-title color-white">เที่ยว ตจว.</h5>
+                  <h5 class="card-title color-white">{{list.leave.reason}}</h5>
                 </div>
               </div>
               <div class="row">
                 <div class="col-12">
-                  <button class="approve">ผู้อนุมัติ : สุธาสินี</button>
+                  <button class="approve">ผู้อนุมัติ : {{profile ? profile.displayName : ''}}</button>
                 </div>
               </div>
             </div>
             <div class="col-6 img-profile">
-              <img src="../../../assets/GROUP.svg" alt="" />
+              <img class="img-profile" src="../../../assets/user.png">
             </div>
           </div>
           <div class="row mt-2">
             <div class="col-12 d-flex justify-content-center">
-              <button class="btn-history" data-toggle="modal" data-target="#exampleModalCenter">ประวัติการลา</button>
+              <!-- data-toggle="modal" data-target="#exampleModalCenter" -->
+              <button class="btn-history">ประวัติการลา</button>
             </div>
           </div>
           <div class="row mt-2">
             <div class="col-6 d-flex justify-content-center">
-              <button class="btn-approve" (click)="cilckApprove()"> <img src="../../../assets/tick-square.svg"> อนุมัติ</button>
+              <button class="btn-approve" (click)="cilckApprove(list)"> <img src="../../../assets/tick-square.svg"> อนุมัติ</button>
             </div>
             <div class="col-6 d-flex justify-content-center">
-              <button class="btn-approve" data-toggle="modal" data-target="#exampleModalCenter1"> <img src="../../../assets/close-square.svg"> ไม่อนุมัติ</button>
+              <button class="btn-approve" data-toggle="modal" data-target="#exampleModalCenter1" (click)="sentData(list)"> <img src="../../../assets/close-square.svg"> ไม่อนุมัติ</button>
             </div>
           </div>
         </div>
@@ -129,7 +130,7 @@
           </div>
           <div class="row mt-2">
             <div class="col-12 text-center">
-              <textarea class="form-coltrol textarea" placeholder="เหตุผลที่ไม่อนุมัติ" rows="5"></textarea>
+              <textarea class="form-coltrol textarea" placeholder="เหตุผลที่ไม่อนุมัติ" rows="5" [(ngModel)]="note"></textarea>
             </div>
           </div>
           <div class="row mt-5">
