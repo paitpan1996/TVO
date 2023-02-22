@@ -15,6 +15,7 @@ export class ApproveStatusComponent implements OnInit {
   leaveTypeName: any;
   dataLeave: any;
   param: any;
+  dataDays: any = [];
 
   constructor(private leaveService: LeaveService) {}
 
@@ -79,11 +80,14 @@ export class ApproveStatusComponent implements OnInit {
     }
     this.leaveService.requestLeaveStatus(param).subscribe({
       next: (res: any) => {
+        this.dataLeave = res.approve;
         for(let i = 0; i < res.approve.length; i++) {
           res.approve[i].leave.start_time = moment(res.approve[i].leave.start_time).format('DD/MM/YYYY');
           res.approve[i].leave.end_time = moment(res.approve[i].leave.end_time).format('DD/MM/YYYY');
+          // const data = moment(res.approve[i].leave.start_time).diff(res.approve[i].leave.end_time, 'days');
+          // this.dataDays.push('date',data);
+          // console.log(data);
         }
-        this.dataLeave = res.approve;
         // console.log(res.approve);
       }
     });

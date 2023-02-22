@@ -87,7 +87,7 @@
         </div>
         <div class="row mt-2">
           <div class="col-12">
-            <h5>{{leaveTypePreview}} 5 {{type == 'FULL' ? 'วัน' : 'ชั่วโมง'}}</h5>
+            <h5>{{leaveTypePreview}} {{date}} {{type == 'FULL' ? 'วัน' : 'ชั่วโมง'}}</h5>
           </div>
         </div>
         <!-- <div class="row">
@@ -130,15 +130,17 @@
             </div>
         </div>
         <div class="row mt-2">
-          <div class="col-12">
-            <h5>  <img src="../../../assets/tick-circle.svg" /> ผู้อนุมัติ</h5>
-          </div>
-        </div>
-        <div class="row">
-            <div class="col">
-              <label class="small-text"></label>
+            <div class="col-12">
+              <h5>  <img src="assets/tick-circle.svg" /> ผู้อนุมัติ</h5>
             </div>
         </div>
+        <ng-container *ngFor="let item of approverList">
+        <div class="row">
+            <div class="col">
+              <label class="small-text">{{item.approverAssoc?.name_th}}</label>
+            </div>
+        </div>
+      </ng-container>
         <div class="row mt-2">
           <div class="col-12">
             <h5>เอกสารแนบ</h5>
@@ -147,6 +149,7 @@
         <div class="row">
             <div class="col">
               <label class="small-text">{{filePreview ? filePreview : 'ไม่ได้แนบไฟล์'}}</label>
+              <img class="img-preview" src="{{url}}" alt="">
             </div>
         </div>
         <div class="row mt-5">

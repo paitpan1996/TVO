@@ -12,12 +12,14 @@ type UnPromise<T> = T extends Promise<infer X>? X : T;
   styleUrls: ['./leave-status.component.scss']
 })
 export class LeaveStatusComponent implements OnInit {
+  datePreview: any;
 
   constructor (private leaveService: LeaveService) {}
 
-  os: ReturnType<typeof liff.getOS>;  
+  os: ReturnType<typeof liff.getOS>; 
   profile!: UnPromise<ReturnType<typeof liff.getProfile>>;
   dataLeave: any = [];
+  dataDays: any = [];
   leaveTypeName: any;
   statusPreview: any;
   note!: string;
@@ -42,6 +44,7 @@ export class LeaveStatusComponent implements OnInit {
     const param = {
       line_id: this.profile?.userId
       // line_id: 'U415bef6926c6126ae6b7370e46714288'
+      // line_id: 'Uab6620e68248620f8c554228f90595b6'
     }
   
     this.leaveService.getInitLeaveData(param).subscribe({
@@ -57,7 +60,8 @@ export class LeaveStatusComponent implements OnInit {
     const param = {
       line_id: this.profile?.userId,
       // line_id: "U415bef6926c6126ae6b7370e46714288",
-      status: "PENDING"
+      // line_id: "Uab6620e68248620f8c554228f90595b6",
+      // status: "PENDING"
     }
   
     this.leaveService.requestLeaveStatus(param).subscribe({
@@ -66,9 +70,9 @@ export class LeaveStatusComponent implements OnInit {
         for(let i = 0; i < res.leave.length; i++) {
           res.leave[i].start_time = moment(res.leave[i].start_time).format("YYYY-MM-DD");
           res.leave[i].end_time = moment(res.leave[i].end_time).format("YYYY-MM-DD");
-          if(res.leave[i].status == 'PENDING') {
+          const data = moment(res.leave[i].start_time).diff(res.leave[i].end_time,'days');
             this.dataLeave.push(res.leave[i]);
-          }
+            this.dataDays.push(data);
         }
         // this.dataLeave = res.leave;
         // console.log(this.dataLeave);
@@ -76,9 +80,9 @@ export class LeaveStatusComponent implements OnInit {
     })
   }
 
-  getDataUser(item: any) {
-    // console.log(item);
+  getDataUser(item: any, date: any) {
     this.statusPreview = item
+    this.datePreview = date;
   }
 
   send() {

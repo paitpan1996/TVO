@@ -13,7 +13,7 @@ type UnPromise<T> = T extends Promise<infer X>? X : T;
 })
 export class WriteLeaveComponent implements OnInit {
 
-  os: ReturnType<typeof liff.getOS>;  
+  os: ReturnType<typeof liff.getOS>;
   profile!: UnPromise<ReturnType<typeof liff.getProfile>>;
 
 yourFile: any;
@@ -25,7 +25,7 @@ endDate!: string;
 
 startTime!: string;
 endTime!: string;
-date!: string;
+date!: number;
 desc!: string;
 
 leaveTypePreview!: string;
@@ -33,6 +33,10 @@ filePreview!: string;
 endDatePreview!: string;
 datePreview!: string;
 startDatePerview!: string;
+fd!: FormData;
+  url: any;
+  approverList: any;
+  minutes: any;
 
 constructor(
   private leaveService: LeaveService
@@ -64,6 +68,7 @@ getInitLeaveData() {
     next: (res: any) => {
       // console.log(res.leaveType);
       this.leaveTypeName = res.leaveType;
+      this.approverList = res.approverList
     }
   })
 }
@@ -73,67 +78,74 @@ setFromat() {
   for(let i = 0; i < this.leaveTypeName; i++) {
     if(this.leaveType == this.leaveTypeName[i].id) {
       this.leaveTypePreview = this.leaveTypeName[i].name;
-      // console.log(this.leaveTypePreview);
     }
   }
 
   this.startDatePerview = this.startDate
   this.endDatePreview = this.endDate
-  // let sumDate = (+this.startDatePerview) - (+this.endDatePreview);
-  // console.log(sumDate);
   // this.leaveTypePreview = leaveTypePreview;
   this.startDatePerview = moment(this.startDatePerview).format('DD/MM/YYYY HH:mm');
   this.endDatePreview = moment(this.endDatePreview).format('DD/MM/YYYY HH:mm');
-  this.date = moment(this.date).format('DD/MM/YYYY HH:mm');
+  this.date = moment(this.startDatePerview).diff(this.endDatePreview, 'days');
+  this.minutes = moment(this.startDatePerview).diff(this.endDatePreview, 'minutes');
 }
 
 getFile(fileInput: any) {
   const file = fileInput.target.files[0];
+  console.log(file);
   this.filePreview = file.name;
 
-  const fd = new FormData();
-  fd.append('userAttachmentFile', file);
+  const reader = new FileReader();
+      reader.onload = (innerFileInput: any) => {
+        this.url = innerFileInput.target.result;
+  }
+  reader.readAsDataURL(fileInput.target.files[0]);
 
-  this.leaveService.doAttachFile(fd).subscribe({
-    next: (res: any) => {
-      this.yourFile = res.filename;
-    }
-  })
+  this.fd = new FormData();
+  this.fd.append('userAttachmentFile', file);
+
 }
 
 sendLeave() {
-  const param = {
-    line_id: this.profile?.userId,
-    // line_id: 'U415bef6926c6126ae6b7370e46714288',
-    reason: this.desc ? this.desc : 'ไม่ได้ระบุเหตุผล',
-    type_id: +this.leaveType,
-    leave_format: this.type,
-    start: this.startDate,
-    end: this.endDate,
-    file: this.yourFile ? this.yourFile : 'ไม่ได้แนบไฟล์'
-  }
 
-  this.leaveService.addLeave(param).subscribe({
+  this.leaveService.doAttachFile(this.fd).subscribe({
     next: (res: any) => {
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'สำเร็จ !',
-        text: "บันทึกการลาของคุณเรียบร้อย",
-        showConfirmButton: false,
-        timer: 1500
+      this.yourFile = res.filename;
+
+      const param = {
+        line_id: this.profile?.userId,
+        // line_id: 'U415bef6926c6126ae6b7370e46714288',
+        reason: this.desc ? this.desc : 'ไม่ได้ระบุเหตุผล',
+        type_id: +this.leaveType,
+        leave_format: this.type,
+        start: this.startDate,
+        end: this.endDate,
+        file: this.yourFile ? this.yourFile : 'ไม่ได้แนบไฟล์'
+      }
+    
+      this.leaveService.addLeave(param).subscribe({
+        next: (res: any) => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'สำเร็จ !',
+            text: "บันทึกการลาของคุณเรียบร้อย",
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }, error: (err: any) => {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'เกิดข้อผิดพลาด !',
+            text: err.error.error,
+            showConfirmButton: true,
+            confirmButtonText: 'ตกลง',
+            confirmButtonColor: '#00833F'
+          })
+        },
       })
-    }, error: (err: any) => {
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: 'เกิดข้อผิดพลาด !',
-        text: err.error.error,
-        showConfirmButton: true,
-        confirmButtonText: 'ตกลง',
-        confirmButtonColor: '#00833F'
-      })
-    },
+    }
   })
 }
 

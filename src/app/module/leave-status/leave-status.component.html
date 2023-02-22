@@ -1,39 +1,44 @@
 <div class="container-fluid">
   <ng-container *ngFor="let item of dataLeave">
-    <div class="card card-color mt-2" data-toggle="modal" data-target="#exampleModalCenter" (click)="getDataUser(item)">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-7 center">
-            <h5 class="card-title color-white">ลาพักร้อน 5 วัน</h5>
-          </div>
-          <div class="col-5">
-            <button class="status">รออนุมัติ</button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 center">
-            <h5 class="card-title color-white">{{item.start_time}} - {{item.end_time}}</h5>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-6">
-            <div class="row">
-              <div class="col-12">
-                <h5 class="card-title color-white">{{item.reason}}</h5>
-              </div>
+    <ng-container *ngFor="let date of dataDays">
+      <div class="card card-color mt-2" data-toggle="modal" data-target="#exampleModalCenter" (click)="getDataUser(item, date)">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-7 center">
+              <h5 class="card-title color-white">ลาพักร้อน {{date}} วัน</h5>
             </div>
-            <div class="row">
-              <div class="col-12">
-                <button class="approve">ผู้อนุมัติ : {{item.leave_approvals[0]?.employee.name_th}}</button>
-              </div>
+            <div class="col-5">
+              <button class="status" *ngIf="item.status == 'PENDING'">รออนุมัติ</button>
+              <button class="rejected" *ngIf="item.status == 'REJECTED'">ไม่อนุมัติ</button>
+              <button class="approved" *ngIf="item.status == 'APPROVED'">อนุมัติ</button>
+              <button class="cancelled" *ngIf="item.status == 'CANCELLED'">ยกเลิกการลา</button>
             </div>
           </div>
-          <div class="col-6 img-profile">
-            <img class="img-profile" src="{{profile ? profile.pictureUrl : ''}}" alt="" />
+          <div class="row">
+            <div class="col-12 center">
+              <h5 class="card-title color-white">{{item.start_time}} - {{item.end_time}}</h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <div class="row">
+                <div class="col-12">
+                  <h5 class="card-title color-white">{{item.reason}}</h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <button class="approve">ผู้อนุมัติ : {{item.leave_approvals[0]?.employee.name_th}}</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 img-profile">
+              <img class="img-profile" src="{{profile ? profile.pictureUrl : ''}}" alt="" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </ng-container>
   </ng-container>
 </div>
 
@@ -59,7 +64,7 @@
           </div>
           <div class="row mt-2">
             <div class="col-12">
-              <h5>ลาพักร้อน 5 วัน</h5>
+              <h5>ลาพักร้อน {{datePreview}} วัน</h5>
             </div>
           </div>
           <div class="row">
@@ -89,7 +94,7 @@
           </div>
           <div class="row mt-2">
             <div class="col-12">
-              <h5>  <img src="../../../assets/tick-circle.svg" /> ผู้อนุมัติ : {{statusPreview?.leave_approvals[0]?.employee.name_th}}</h5>
+              <h5>  <img src="assets/tick-circle.svg" /> ผู้อนุมัติ : {{statusPreview?.leave_approvals[0]?.employee.name_th}}</h5>
             </div>
           </div>
           <div class="row">
@@ -127,7 +132,7 @@
         <div class="modal-body">
           <div class="row mt-2">
             <div class="col-12 text-center">
-              <img src="../../../assets/GROUP.svg" />
+              <img src="assets/seccess-circle.svg" />
             </div>
           </div>
           <div class="row mt-2">
