@@ -1,12 +1,15 @@
 <div class="container-fluid">
-    <div class="row mt-2">
-        <div class="col d-flex justify-content-center">
-            <button class="btn-date"> ม.ค. 2566</button>
-        </div>
+  <div class="row mt-2 d-flex">
+    <!-- <div class="col">
+      <img class="fa-calendar" src="assets/calendar.svg" (click)="openPicker()">
+    </div> -->
+    <div class="col text-end">
+      <img src="assets/user.svg" alt="" (click)="checkStatus()" >
     </div>
+  </div>
     <ng-container *ngFor="let list of dataLeave">
       <!-- <ng-container *ngFor="let item of dataDays"> -->
-        <div class="card card-color mt-2">
+        <div class="card card-color mt-2" (click)="getDataUser(list)">
           <div class="card-body">
             <div class="row">
               <div class="col-7 center">
@@ -18,7 +21,17 @@
             </div>
             <div class="row">
               <div class="col-12 center">
-                <h5 class="card-title color-white">ลาพักร้อน</h5>
+                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 1" >ลาป่วย <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
+                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 2" >ลากิจ <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
+                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 3" >ลาคลอดบุตร <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
+                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 4" >ลาเพื่อรับราชการทหาร <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
+                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 5" >ลาอุปสมบทและแสวงบุญ  <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
+                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 6" >การลาเพื่อปฏิบัติธรรมและประกอบพิธีกรรมทางศาสนา <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
+                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 7" >ลาเพื่ออบรมหรือพัฒนาความรู้ความสามารถ <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
+                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 8" >ลาเพื่อจัดการงานศพ <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
+                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 9" >ลาอุปสมบท (หน้าไฟ) <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
+                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 10" >ลาเพื่อทำหมัน <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
+                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 11" >ลาพักร้อน <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
               </div>
             </div>
             <div class="row">
@@ -26,27 +39,26 @@
                 <h5 class="card-title color-white">{{list.leave.start_time}} - {{list.leave.end_time}}</h5>
               </div>
             </div>
-            <div class="row">
-              <div class="col-6">
-                <div class="row">
-                  <div class="col-12">
-                    <h5 class="card-title color-white">{{list.leave.reason}}</h5>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12">
-                    <button class="approve">ผู้อนุมัติ : {{profile ? profile.displayName : ''}}</button>
-                  </div>
+              <div class="row">
+                <div class="col-12">
+                  <h5 class="card-title color-white">{{list.leave.reason}}</h5>
                 </div>
               </div>
-              <div class="col-6 img-profile">
-                <img class="img-profile" src="assets/user.png">
+            <div class="row mt-2">
+              <div class="col">
+                <button class="approve">ผู้อนุมัติ : {{myName ? myName.name_th : ''}}</button>
               </div>
             </div>
             <div class="row mt-2">
               <div class="col-12 d-flex justify-content-center">
                 <!-- data-toggle="modal" data-target="#exampleModalCenter" -->
-                <button class="btn-history">ประวัติการลา</button>
+                <button class="btn-history" data-toggle="modal" data-target="#exampleModalCenter1">รายละเอียดการลา</button>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-12 d-flex justify-content-center">
+                <!-- data-toggle="modal" data-target="#exampleModalCenter" -->
+                <button class="btn-history" data-toggle="modal" data-target="#exampleModalCenter" (click)="checkLeave(list.leave)" >ประวัติการลา</button>
               </div>
             </div>
             <div class="row mt-2">
@@ -54,13 +66,94 @@
                 <button class="btn-approve" (click)="cilckApprove(list)"> <img src="assets/tick-square.svg"> อนุมัติ</button>
               </div>
               <div class="col-6 d-flex justify-content-center">
-                <button class="btn-approve" data-toggle="modal" data-target="#exampleModalCenter1" (click)="sentData(list)"> <img src="../../../assets/close-square.svg"> ไม่อนุมัติ</button>
+                <button class="btn-approve" data-toggle="modal" data-target="#exampleModalCenter2" (click)="sentData(list)"> <img src="assets/close-square.svg"> ไม่อนุมัติ</button>
               </div>
             </div>
           </div>
         </div>
       <!-- </ng-container> -->
     </ng-container>
+</div>
+
+<!-- modal -->
+<div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row mt-2 text-center">
+          <div class="col-12">
+            <h5>รายละเอียด</h5>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12 text-center">
+            <h5>{{statusPreview?.leave?.employee?.name_th}}</h5>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12">
+            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 1" >ลาป่วย</h5>
+            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 2" >ลากิจ</h5>
+            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 3" >ลาคลอดบุตร</h5>
+            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 4" >ลาเพื่อรับราชการทหาร</h5>
+            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 5" >ลาอุปสมบทและแสวงบุญ</h5>
+            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 6" >การลาเพื่อปฏิบัติธรรมและประกอบพิธีกรรมทางศาสนา</h5>
+            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 7" >ลาเพื่ออบรมหรือพัฒนาความรู้ความสามารถ</h5>
+            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 8" >ลาเพื่อจัดการงานศพ</h5>
+            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 9" >ลาอุปสมบท (หน้าไฟ)</h5>
+            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 10" >ลาเพื่อทำหมัน</h5>
+            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 11" >ลาพักร้อน</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <!-- <label class="small-text">คงเหลือ 3 ชั่วโมง</label> -->
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12">
+            <h5>ช่วงเวลา : <label  *ngIf="statusPreview?.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="statusPreview?.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="statusPreview?.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            &nbsp;  <label class="small-text">{{statusPreview?.leave?.start_time}} - {{statusPreview?.leave?.end_time}}</label>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12">
+            <h5>เหตุผลการลา</h5>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col">
+              &nbsp;  <label class="small-text">{{statusPreview?.leave?.reason}}</label>
+            </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12">
+            <h5>  <img src="assets/tick-circle.svg" /> ผู้อนุมัติ : {{statusPreview?.leave?.leave_approvals[0]?.employee.name_th}}</h5>
+          </div>
+        </div>
+        <!-- <div class="row">
+            <div class="col">
+              &nbsp;  <label class="small-text">{{statusPreview?.leave?.leave_approvals[0]?.note ? statusPreview?.leave?.leave_approvals[0]?.note : 'เหตุผลการไม่อนุมัติ'}}</label>
+            </div>
+        </div> -->
+        <div class="row mt-2">
+          <div class="col-12">
+            <h5>เอกสารแนบ</h5>
+          </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col text-center">
+              <img *ngIf="statusPreview?.leave?.file" class="img-user-file" src="{{'https://chatbot.newdice.co/VegetableOil/staticfiles/attachments/' + statusPreview?.leave?.file}}" alt="">
+              <label class="small-text">{{statusPreview?.leave?.file ? statusPreview?.leave?.file : 'ไม่ได้แนบไฟล์'}}</label>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
   <!-- modal -->
@@ -76,47 +169,42 @@
             </div>
             <div class="row mt-2">
                 <div class="col-12 text-center">
-                <img src="assets/GROUP.svg" />
-                </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col-12 text-center">
-                <h5>ไตรทิพย์ xxxxx</h5>
+                <h5>{{namePreview}}</h5>
             </div>
             </div>
-            <ng-container *ngFor="let list of test">
-                <div class="row mt-2">
-                    <div class="col">
-                        <div class="card card-border">
-                            <div class="card-body">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-2">
-                                        <img src="assets/img-levea.svg">
-                                    </div>
-                                    <div class="col-9">
-                                        <div class="row">
-                                            <div class="col">
-                                                <h5 class="card-title h-color">{{list.name}}</h5>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <h6 class="card-subtitle mb-2 text-muted">คงเหลือ 3 วัน 0 ชัวโมง 0 นาที</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            <ng-container *ngFor="let list of data">
+              <div class="row mt-2">
+                  <div class="col">
+                      <div class="card card-border">
+                          <div class="card-body">
+                              <div class="row d-flex justify-content-center">
+                                  <!-- <div class="col-2">
+                                      <img src="../../../assets/img-levea.svg">
+                                  </div> -->
+                                  <div class="col">
+                                      <div class="row">
+                                          <div class="col">
+                                              <h5 class="card-title h-color">{{list.name}}</h5>
+                                          </div>
+                                      </div>
+                                      <div class="row">
+                                          <div class="col">
+                                              <h6 class="card-subtitle mb-2 text-muted">คงเหลือ {{getDate(list)}}</h6>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
                           </div>
-                    </div>
-                </div>
-            </ng-container>
+                        </div>
+                  </div>
+              </div>
+          </ng-container>
         </div>
       </div>
     </div>
 </div>
 
-<div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-body">

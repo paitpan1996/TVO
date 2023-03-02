@@ -18,6 +18,7 @@ export class WriteLeaveComponent implements OnInit {
 
 yourFile: any;
 type = 'FULL';
+typeDate = '1';
 leaveTypeName: any = [];
 leaveType!: number;
 startDate!: string;
@@ -34,9 +35,13 @@ endDatePreview!: string;
 datePreview!: string;
 startDatePerview!: string;
 fd!: FormData;
-  url: any;
-  approverList: any;
-  minutes: any;
+url: any;
+approverList: any;
+minutes: any;
+myName: any;
+  leaveQuota: any;
+  dataLeaveQuota: any;
+  dateQuota: any;
 
 constructor(
   private leaveService: LeaveService
@@ -68,25 +73,66 @@ getInitLeaveData() {
     next: (res: any) => {
       // console.log(res.leaveType);
       this.leaveTypeName = res.leaveType;
-      this.approverList = res.approverList
+      this.approverList = res.approverList;
+      this.myName = res.user;
+      this.getLeaveQuota();
     }
   })
 }
 
+getLeaveQuota() {
+const param = {
+  line_id: this.profile?.userId
+}
+
+this.leaveService.getLeaveQuota(param).subscribe({
+  next: (res: any) => {
+    this.leaveQuota = res.quotas;
+    console.log(res);
+  }
+})
+}
+
+getDataLeave() {
+  console.log('test')
+  for (let i = 0; i < this.leaveQuota.length; i++) {
+    if (this.leaveQuota[i].id == this.leaveType) {
+      this.dataLeaveQuota = this.leaveQuota[i];
+    }
+  }
+  let date
+  date = this.dataLeaveQuota?.matchQuota - this.dataLeaveQuota?.matchUse
+  this.dateQuota = date % 1 == 0 ? date + ' วัน' : Math.floor(date) + ' วันครึ่ง'
+  //todo
+}
+
+resetDate() {
+  this.startDate = '';
+  this.endDate = '';
+}
+
 setFromat() {
   // let leaveTypePreview = ''
-  for(let i = 0; i < this.leaveTypeName; i++) {
-    if(this.leaveType == this.leaveTypeName[i].id) {
+  // for(let i = 0; i < this.leaveTypeName; i++) {
+  //   if(this.leaveType == this.leaveTypeName[i].id) {
+  //     this.leaveTypePreview = this.leaveTypeName[i].name;
+  //   }
+  // }
+
+  for(let i = 0; i < this.leaveTypeName.length; i++) {
+    if(this.leaveTypeName[i].id == +this.leaveType) {
       this.leaveTypePreview = this.leaveTypeName[i].name;
+      // console.log(this.leaveTypePreview);
     }
   }
 
   this.startDatePerview = this.startDate
   this.endDatePreview = this.endDate
   // this.leaveTypePreview = leaveTypePreview;
-  this.startDatePerview = moment(this.startDatePerview).format('DD/MM/YYYY HH:mm');
-  this.endDatePreview = moment(this.endDatePreview).format('DD/MM/YYYY HH:mm');
-  this.date = moment(this.startDatePerview).diff(this.endDatePreview, 'days');
+  this.startDatePerview = moment(this.startDatePerview).format('DD/MM/YYYY');
+  this.endDatePreview = moment(this.endDatePreview).format('DD/MM/YYYY');
+  this.date = moment(this.endDate).diff(this.startDate, 'days');
+  // console.log(this.date);
   this.minutes = moment(this.startDatePerview).diff(this.endDatePreview, 'minutes');
 }
 
@@ -105,48 +151,103 @@ getFile(fileInput: any) {
   this.fd.append('userAttachmentFile', file);
 
 }
-
 sendLeave() {
+  
+  if(!this.leaveType || !this.startDate || !this.endDate) {
+    Swal.fire({
+      position: 'center',
+      icon: 'error',
+      title: 'เกิดข้อผิดพลาด !',
+      text: 'กรุณาตรวจสอบ การลา และวันที่การลา ให้ถูกต้อง',
+      showConfirmButton: true,
+      confirmButtonText: 'ตกลง',
+      confirmButtonColor: '#00833F'
+    })
+    return;
+  }
 
-  this.leaveService.doAttachFile(this.fd).subscribe({
-    next: (res: any) => {
-      this.yourFile = res.filename;
 
-      const param = {
-        line_id: this.profile?.userId,
-        // line_id: 'U415bef6926c6126ae6b7370e46714288',
-        reason: this.desc ? this.desc : 'ไม่ได้ระบุเหตุผล',
-        type_id: +this.leaveType,
-        leave_format: this.type,
-        start: this.startDate,
-        end: this.endDate,
-        file: this.yourFile ? this.yourFile : 'ไม่ได้แนบไฟล์'
+  if(this.fd) {
+    this.leaveService.doAttachFile(this.fd).subscribe({
+      next: (res: any) => {
+        this.yourFile = res.filename;
+        const param = {
+          line_id: this.profile?.userId,
+          // line_id: 'U415bef6926c6126ae6b7370e46714288',
+          reason: this.desc ? this.desc : 'ไม่ได้ระบุเหตุผล',
+          type_id: +this.leaveType,
+          leave_format: this.type,
+          start: this.startDate,
+          end: this.endDate,
+          file: this.yourFile
+        }
+      
+        this.leaveService.addLeave(param).subscribe({
+          next: (res: any) => {
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'สำเร็จ !',
+              text: "บันทึกการลาของคุณเรียบร้อย",
+              showConfirmButton: false,
+              timer: 1500
+            })
+            setTimeout(() => {
+              window.location.href = 'leave-status';
+            }, 1500);
+          }, error: (err: any) => {
+            Swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: 'เกิดข้อผิดพลาด !',
+              text: err.error.error,
+              showConfirmButton: true,
+              confirmButtonText: 'ตกลง',
+              confirmButtonColor: '#00833F'
+            })
+          },
+        })
       }
-    
-      this.leaveService.addLeave(param).subscribe({
-        next: (res: any) => {
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'สำเร็จ !',
-            text: "บันทึกการลาของคุณเรียบร้อย",
-            showConfirmButton: false,
-            timer: 1500
-          })
-        }, error: (err: any) => {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'เกิดข้อผิดพลาด !',
-            text: err.error.error,
-            showConfirmButton: true,
-            confirmButtonText: 'ตกลง',
-            confirmButtonColor: '#00833F'
-          })
-        },
-      })
+    })
+  } else {
+    const param = {
+      line_id: this.profile?.userId,
+      // line_id: 'U415bef6926c6126ae6b7370e46714288',
+      reason: this.desc ? this.desc : 'ไม่ได้ระบุเหตุผล',
+      type_id: +this.leaveType,
+      leave_format: this.type,
+      start: this.startDate,
+      end: this.endDate,
+      // file: 'ไม่ได้แนบไฟล์'
     }
-  })
+  
+    this.leaveService.addLeave(param).subscribe({
+      next: (res: any) => {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'สำเร็จ !',
+          text: "บันทึกการลาของคุณเรียบร้อย",
+          showConfirmButton: false,
+          timer: 1500
+        })
+        setTimeout(() => {
+          window.location.href = 'leave-status';
+        }, 1500);
+      }, error: (err: any) => {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'เกิดข้อผิดพลาด !',
+          text: err.error.error,
+          showConfirmButton: true,
+          confirmButtonText: 'ตกลง',
+          confirmButtonColor: '#00833F'
+        })
+      },
+    })
+  }
+
 }
 
 }

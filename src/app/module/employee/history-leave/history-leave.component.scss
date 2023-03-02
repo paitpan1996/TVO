@@ -40,3 +40,49 @@
   .red {
     color: red;
   }
+
+  .card-color {
+    background-color: #00833F;
+    border-radius: 25px;
+  }
+
+  .card-border {
+      border: solid 2px #00833F;
+      border-radius: 25px;
+  }
+
+  .status {
+    color: #FFA900;
+    background-color: white;
+    border: solid 2px #FFA900;
+    border-radius: 15px;
+    padding: 10px;
+    width: 100%;
+}
+
+.rejected {
+    color: red;
+    background-color: white;
+    border: solid 2px red;
+    border-radius: 15px;
+    padding: 10px;
+    width: 100%;
+}
+
+.approved {
+    color: #00833F;
+    background-color: white;
+    border: solid 2px #00833F;
+    border-radius: 15px;
+    padding: 10px;
+    width: 100%;
+}
+
+.cancelled {
+    color: purple;
+    background-color: white;
+    border: solid 2px purple;
+    border-radius: 15px;
+    padding: 10px;
+    width: 100%;
+}

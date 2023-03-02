@@ -13,6 +13,7 @@ type UnPromise<T> = T extends Promise<infer X>? X : T;
 })
 export class LeaveStatusComponent implements OnInit {
   datePreview: any;
+  myName: any;
 
   constructor (private leaveService: LeaveService) {}
 
@@ -45,6 +46,7 @@ export class LeaveStatusComponent implements OnInit {
       line_id: this.profile?.userId
       // line_id: 'U415bef6926c6126ae6b7370e46714288'
       // line_id: 'Uab6620e68248620f8c554228f90595b6'
+      // line_id: 'U29b0687712ba81f325cdd94daf68fac4'
     }
   
     this.leaveService.getInitLeaveData(param).subscribe({
@@ -61,6 +63,7 @@ export class LeaveStatusComponent implements OnInit {
       line_id: this.profile?.userId,
       // line_id: "U415bef6926c6126ae6b7370e46714288",
       // line_id: "Uab6620e68248620f8c554228f90595b6",
+      // line_id: "U29b0687712ba81f325cdd94daf68fac4",
       // status: "PENDING"
     }
   
@@ -74,15 +77,16 @@ export class LeaveStatusComponent implements OnInit {
             this.dataLeave.push(res.leave[i]);
             this.dataDays.push(data);
         }
+        this.myName = res.user;
         // this.dataLeave = res.leave;
         // console.log(this.dataLeave);
       }
     })
   }
 
-  getDataUser(item: any, date: any) {
-    this.statusPreview = item
-    this.datePreview = date;
+  getDataUser(item: any) {
+    this.statusPreview = item;
+    // this.datePreview = date;
   }
 
   send() {

@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'
 import { NgSelectModule } from '@ng-select/ng-select';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+
+import { FilterPipe } from './filter.pipe';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,7 +23,8 @@ import { HistoryLeaveComponent } from './module/employee/history-leave/history-l
     ApproveStatusComponent,
     EmployeeInformationComponent,
     EmployeeHistoryComponent,
-    HistoryLeaveComponent
+    HistoryLeaveComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
@@ -29,9 +32,8 @@ import { HistoryLeaveComponent } from './module/employee/history-leave/history-l
     NgSelectModule,
     FormsModule,
     HttpClientModule,
-
   ],
-  providers: [],
+  providers: [AppComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

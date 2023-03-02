@@ -40,4 +40,20 @@ export class LeaveService {
     });
   }
 
+  getLeaveQuota(param: any) {
+    return this.http.post(this.url + this.leave + 'getLeaveQuota', param);
+  }
+
+  getEmployerList(param: any) {
+    return this.http.post(this.url + this.leave + 'getEmployerList', param);
+  }
+
+  getEmployerLeaveQuota(param: any) {
+    return this.http.post(this.url + this.leave + 'getEmployerLeaveQuota', param);
+  }
+
+  getEmployerLeaveHistory(param: any) {
+    return this.http.post(this.url + this.leave + 'getEmployerLeaveHistory', param);
+  }
+
 }

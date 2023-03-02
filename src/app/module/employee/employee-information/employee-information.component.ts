@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import liff from '@line/liff/dist/lib';
+import { LeaveService } from 'src/app/service/leave.service';
+
+type UnPromise<T> = T extends Promise<infer X>? X : T;
 
 @Component({
   selector: 'app-employee-information',
@@ -8,28 +12,49 @@ import { Router } from '@angular/router';
 })
 export class EmployeeInformationComponent {
 
-  constructor( private router: Router) {
+  constructor(
+    private router: Router,
+    private leaveService: LeaveService) {}
+
+  os: ReturnType<typeof liff.getOS>;  
+  profile!: UnPromise<ReturnType<typeof liff.getProfile>>;
+
+  searchText = '';
+
+
+  data: any
+
+  ngOnInit(): void {
+    liff.init({liffId:'1657746390-LeORq250'}).then(()=>{
+      this.os=liff.getOS();
+      if(liff.isLoggedIn()){
+        liff.getProfile().then( profile =>{
+          this.profile = profile;
+          this.getEmployerList();
+          // console.log(this.profile);
+        }).catch(console.error);
+      }else{
+        liff.login()
+      }
+    }).catch(console.error);
   }
 
+  getEmployerList() {
+    const param = {
+      line_id: this.profile.userId
+    }
 
-  item = [
-    {
-      id: 'ND001',
-      name: 'John AAA'
-    },
-    {
-      id: 'ND002',
-      name: 'John BBB'
-    },
-    {
-      id: 'ND003',
-      name: 'John CCC'
-    },
-  ]
+    this.leaveService.getEmployerList(param).subscribe({
+      next: (res: any) => {
+        this.data = res.employers;
+      }
+    })
+  }
 
-  selectEmployee(name: string) {
-    localStorage.setItem('employee', name)
-    this.router.navigate(['/employee-history']);
+  selectEmployee(item: any) {
+    localStorage.setItem('employee_id', item.employee_id)
+    localStorage.setItem('employee_name', item.employeeAssoc.name_th)
+    this.router.navigate(['employee-history']);
   }
 
 }

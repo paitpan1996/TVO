@@ -12,34 +12,21 @@ type UnPromise<T> = T extends Promise<infer X>? X : T;
   styleUrls: ['./approve-status.component.scss']
 })
 export class ApproveStatusComponent implements OnInit {
+
   leaveTypeName: any;
   dataLeave: any;
   param: any;
   dataDays: any = [];
+  myName: any;
+  statusPreview: any;
+  datePreview: any;
+  data: any;
+  namePreview: any;
 
   constructor(private leaveService: LeaveService) {}
 
   os: ReturnType<typeof liff.getOS>;  
   profile!: UnPromise<ReturnType<typeof liff.getProfile>>;
-  
-  test = [
-    {
-      id: 1,
-      name: 'ลากิจ',
-    },
-    {
-      id: 2,
-      name: 'ลาป่วย',
-    },
-    {
-      id: 3,
-      name: 'ลาพักร้อน',
-    },
-    {
-      id: 3,
-      name: 'ลาอื่นๆ',
-    },
-  ]
 
   note!: string;
 
@@ -57,6 +44,11 @@ export class ApproveStatusComponent implements OnInit {
         liff.login()
       }
     }).catch(console.error);
+  }
+
+  checkStatus() {
+    localStorage.setItem('myname',  this.myName.name_th);
+    window.location.href = 'employee-information';
   }
 
   getInitLeaveData() {
@@ -77,10 +69,12 @@ export class ApproveStatusComponent implements OnInit {
     const param = {
       line_id: this.profile?.userId,
       // line_id: 'U415bef6926c6126ae6b7370e46714288'
+      // line_id: 'U29b0687712ba81f325cdd94daf68fac4'
     }
     this.leaveService.requestLeaveStatus(param).subscribe({
       next: (res: any) => {
         this.dataLeave = res.approve;
+        this.myName = res.user;
         for(let i = 0; i < res.approve.length; i++) {
           res.approve[i].leave.start_time = moment(res.approve[i].leave.start_time).format('DD/MM/YYYY');
           res.approve[i].leave.end_time = moment(res.approve[i].leave.end_time).format('DD/MM/YYYY');
@@ -93,13 +87,28 @@ export class ApproveStatusComponent implements OnInit {
     });
   }
 
+  checkLeave(item: any) {
+    this.namePreview = item.employee.name_th
+    const param = {
+      approver_line_id: this.profile?.userId,
+      employee_id: item.employee_id
+    }
+
+    this.leaveService.getEmployerLeaveQuota(param).subscribe({
+      next: (res: any) => {
+        this.data = res.quotas;
+      }
+    })
+  }
+
   cilckApprove(item: any) {
 
     const param = {
       line_id: this.profile?.userId,
       // line_id: 'U415bef6926c6126ae6b7370e46714288',
+      // line_id: 'U29b0687712ba81f325cdd94daf68fac4',
       leave_id: item.id,
-      result: 'ACCEPT'
+      result: 'APPROVED'
     }
 
     this.leaveService.approveLeave(param).subscribe({
@@ -112,6 +121,10 @@ export class ApproveStatusComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         })
+        setTimeout(() => {
+          this.getInitLeaveData();
+          this.requestLeaveStatus();
+        }, 1500);
       }, error: (err) => {
         Swal.fire({
           position: 'center',
@@ -128,40 +141,74 @@ export class ApproveStatusComponent implements OnInit {
   }
 
   sentData(item: any) {
+    this.note = '';
     this.param = item;
   }
 
   cilckNotApprove() {
-    const param = {
-      line_id: this.profile?.userId,
-      // line_id: 'U415bef6926c6126ae6b7370e46714288',
-      leave_id: this.param.id,
-      result: 'REJECT',
-      note: this.note ? this.note : 'ไม่ได้กรอกเหตุผล'
-    }
 
-    this.leaveService.approveLeave(param).subscribe({
-      next: (res: any) => {
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'สำเร็จ !',
-          text: "ไม่อนุมัติการลา",
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }, error: (err) => {
-        Swal.fire({
-          position: 'center',
-          icon: 'error',
-          title: 'เกิดข้อผิดพลาด !',
-          text: "ไม่สามารถ ไม่อนุมัติการลาได้ กรุณาติดต่อแอดมิน",
-          showConfirmButton: true,
-          confirmButtonText: 'ตกลง',
-          confirmButtonColor: '#00833F'
-        })
+    if(this.note) {
+      const param = {
+        line_id: this.profile?.userId,
+        // line_id: 'U415bef6926c6126ae6b7370e46714288',
+        // line_id: 'U29b0687712ba81f325cdd94daf68fac4',
+        leave_id: this.param.id,
+        result: 'REJECTED',
+        note: this.note
       }
-    })
+  
+      this.leaveService.approveLeave(param).subscribe({
+        next: (res: any) => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'สำเร็จ !',
+            text: "ไม่อนุมัติการลา",
+            showConfirmButton: false,
+            timer: 1500
+          })
+          setTimeout(() => {
+            this.getInitLeaveData();
+            this.requestLeaveStatus();
+          }, 1500);
+        }, error: (err) => {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'เกิดข้อผิดพลาด !',
+            text: "ไม่สามารถ ไม่อนุมัติการลาได้ กรุณาติดต่อแอดมิน",
+            showConfirmButton: true,
+            confirmButtonText: 'ตกลง',
+            confirmButtonColor: '#00833F'
+          })
+        }
+      })
+    } else {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'เกิดข้อผิดพลาด !',
+        text: "ไม่สามารถ ไม่อนุมัติการลาได้ กรุณาใส่เหตุผลการไม่อนุมัติ",
+        showConfirmButton: true,
+        confirmButtonText: 'ตกลง',
+        confirmButtonColor: '#00833F'
+      })
+    }
+  }
+
+  getDataUser(item: any) {
+    this.statusPreview = item
+    this.datePreview = moment(item.end_time).diff(item.start_time, 'days');
+  }
+
+  getDate(item: any) {
+    let date
+    date = item.matchQuota - item.matchUse
+    return date % 1 == 0 ? date + ' วัน' : Math.floor(date) + ' วันครึ่ง'
+  }
+
+  openPicker() {
+    
   }
 
 }

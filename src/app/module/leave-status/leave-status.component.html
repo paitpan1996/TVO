@@ -1,11 +1,21 @@
 <div class="container-fluid">
   <ng-container *ngFor="let item of dataLeave">
-    <ng-container *ngFor="let date of dataDays">
-      <div class="card card-color mt-2" data-toggle="modal" data-target="#exampleModalCenter" (click)="getDataUser(item, date)">
+    <!-- <ng-container *ngFor="let date of dataDays"> -->
+      <div class="card card-color mt-2" data-toggle="modal" data-target="#exampleModalCenter" (click)="getDataUser(item)">
         <div class="card-body">
           <div class="row">
             <div class="col-7 center">
-              <h5 class="card-title color-white">ลาพักร้อน {{date}} วัน</h5>
+              <h5 class="card-title color-white" *ngIf="item.type_id == 1" >ลาป่วย</h5>
+              <h5 class="card-title color-white" *ngIf="item.type_id == 2" >ลากิจ</h5>
+              <h5 class="card-title color-white" *ngIf="item.type_id == 3" >ลาคลอดบุตร</h5>
+              <h5 class="card-title color-white" *ngIf="item.type_id == 4" >ลาเพื่อรับราชการทหาร</h5>
+              <h5 class="card-title color-white" *ngIf="item.type_id == 5" >ลาอุปสมบทและแสวงบุญ</h5>
+              <h5 class="card-title color-white" *ngIf="item.type_id == 6" >การลาเพื่อปฏิบัติธรรมและประกอบพิธีกรรมทางศาสนา</h5>
+              <h5 class="card-title color-white" *ngIf="item.type_id == 7" >ลาเพื่ออบรมหรือพัฒนาความรู้ความสามารถ</h5>
+              <h5 class="card-title color-white" *ngIf="item.type_id == 8" >ลาเพื่อจัดการงานศพ</h5>
+              <h5 class="card-title color-white" *ngIf="item.type_id == 9" >ลาอุปสมบท (หน้าไฟ)</h5>
+              <h5 class="card-title color-white" *ngIf="item.type_id == 10" >ลาเพื่อทำหมัน</h5>
+              <h5 class="card-title color-white" *ngIf="item.type_id == 11" >ลาพักร้อน</h5>
             </div>
             <div class="col-5">
               <button class="status" *ngIf="item.status == 'PENDING'">รออนุมัติ</button>
@@ -38,7 +48,7 @@
           </div>
         </div>
       </div>
-    </ng-container>
+    <!-- </ng-container> -->
   </ng-container>
 </div>
 
@@ -58,23 +68,33 @@
             </div>
           </div>
           <div class="row mt-2">
-            <div class="col-12">
-              <h5>{{profile ? profile.displayName : ''}}</h5>
+            <div class="col-12 text-center">
+              <h5>{{myName ? myName.name_th : ''}}</h5>
             </div>
           </div>
           <div class="row mt-2">
             <div class="col-12">
-              <h5>ลาพักร้อน {{datePreview}} วัน</h5>
+              <h5 class="card-title" *ngIf="statusPreview?.type_id == 1" >ลาป่วย</h5>
+              <h5 class="card-title" *ngIf="statusPreview?.type_id == 2" >ลากิจ</h5>
+              <h5 class="card-title" *ngIf="statusPreview?.type_id == 3" >ลาคลอดบุตร</h5>
+              <h5 class="card-title" *ngIf="statusPreview?.type_id == 4" >ลาเพื่อรับราชการทหาร</h5>
+              <h5 class="card-title" *ngIf="statusPreview?.type_id == 5" >ลาอุปสมบทและแสวงบุญ</h5>
+              <h5 class="card-title" *ngIf="statusPreview?.type_id == 6" >การลาเพื่อปฏิบัติธรรมและประกอบพิธีกรรมทางศาสนา</h5>
+              <h5 class="card-title" *ngIf="statusPreview?.type_id == 7" >ลาเพื่ออบรมหรือพัฒนาความรู้ความสามารถ</h5>
+              <h5 class="card-title" *ngIf="statusPreview?.type_id == 8" >ลาเพื่อจัดการงานศพ</h5>
+              <h5 class="card-title" *ngIf="statusPreview?.type_id == 9" >ลาอุปสมบท (หน้าไฟ)</h5>
+              <h5 class="card-title" *ngIf="statusPreview?.type_id == 10" >ลาเพื่อทำหมัน</h5>
+              <h5 class="card-title" *ngIf="statusPreview?.type_id == 11" >ลาพักร้อน</h5>
             </div>
           </div>
           <div class="row">
             <div class="col">
-              <label class="small-text">คงเหลือ 3 ชั่วโมง</label>
+              <!-- <label class="small-text">คงเหลือ 3 ชั่วโมง</label> -->
             </div>
           </div>
           <div class="row mt-2">
             <div class="col-12">
-              <h5>ช่วงเวลา</h5>
+              <h5>ช่วงเวลา : <label  *ngIf="statusPreview?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="statusPreview?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="statusPreview?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
             </div>
           </div>
           <div class="row">
@@ -92,16 +112,18 @@
                 <label class="small-text">{{statusPreview?.reason}}</label>
               </div>
           </div>
-          <div class="row mt-2">
-            <div class="col-12">
-              <h5>  <img src="assets/tick-circle.svg" /> ผู้อนุมัติ : {{statusPreview?.leave_approvals[0]?.employee.name_th}}</h5>
-            </div>
-          </div>
-          <div class="row">
-              <div class="col">
-                <label class="small-text"></label>
+          <ng-container  *ngFor="let item of statusPreview?.leave_approvals; index as i">
+            <div class="row mt-2">
+              <div class="col-12">
+                <h5>  <img src="assets/tick-circle.svg" /> ผู้อนุมัติ : {{item.employee.name_th}}</h5>
               </div>
-          </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                  <label class="small-text">{{item.note}}</label>
+                </div>
+            </div>
+          </ng-container>
           <div class="row mt-2">
             <div class="col-12">
               <h5>เอกสารแนบ</h5>
@@ -109,11 +131,12 @@
           </div>
           <div class="row">
               <div class="col">
-                <label class="small-text">{{statusPreview?.file ? statusPreview?.file : 'ไม่ได้แนบไฟล์'}}</label>
+                <img *ngIf="statusPreview?.leave?.file" class="img-user-file" src="{{'https://chatbot.newdice.co/VegetableOil/staticfiles/attachments/' + statusPreview?.leave?.file}}" alt="">
+                <label class="small-text">{{statusPreview?.leave?.file ? statusPreview?.leave?.file : 'ไม่ได้แนบไฟล์'}}</label>
               </div>
           </div>
           <div class="row mt-5">
-            <div class="col-12 text-center">
+            <div class="col-12 text-center" *ngIf="statusPreview?.status == 'PENDING'">
               <!-- data-dismiss="modal" data-toggle="modal" data-target="#exampleModalCenter1" -->
               <button type="button" class="btn-send" (click)="send()">
                 ยกเลิกการลา

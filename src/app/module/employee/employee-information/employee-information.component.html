@@ -2,24 +2,24 @@
     <div class="row mt-2">
         <div class="col">
             <div class="input-group mb-3">
-                <input type="text" class="form-control input-search" placeholder="ค้นหา..." >
+                <input type="text" class="form-control input-search" placeholder="ค้นหา..." [(ngModel)]="searchText" autofocus>
                 <div class="input-group-prepend">
-                  <span class="input-group-text" id="basic-addon1">T_T</span>
+                  <span class="input-group-text" id="basic-addon1"><img src="assets/search-normal.svg"></span>
                 </div>
               </div>
         </div>
     </div>
-    <ng-container *ngFor="let list of item">
+    <ng-container *ngFor="let list of data | appFilter: searchText">
         <div class="row mt-2" >
             <div class="col">
-                <div class="card" data-toggle="modal" title="คลิกเพื่อดูข้อมูล" data-target="#exampleModalCenter" (click)="selectEmployee(list.name)">
+                <div class="card" (click)="selectEmployee(list)">
                     <div class="card-body">
                       <div class="row">
                         <div class="col-3 test">
-                            <h6> {{list.id}} </h6>
+                            <h6> {{list.employeeAssoc?.employee_code}} </h6>
                         </div>
                         <div class="col-9 test">
-                            <h6> {{list.name}} </h6>
+                            <h6> {{list.employeeAssoc?.name_th}} </h6>
                         </div>
                       </div>
                     </div>
