@@ -79,7 +79,7 @@ getInitLeaveData() {
       this.myName = res.user;
       this.getLeaveQuota();
       this.sort = sortData(this.leaveTypeName, 1)
-      console.log(this.sort);
+      // console.log(this.sort);
     }
   })
 }
