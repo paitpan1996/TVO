@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import liff from '@line/liff/dist/lib';
 import * as moment from 'moment';
+import { getObject } from 'src/app/model/liff.model';
 import { LeaveService } from 'src/app/service/leave.service';
 import Swal from 'sweetalert2'
 
@@ -14,6 +15,7 @@ type UnPromise<T> = T extends Promise<infer X>? X : T;
 export class LeaveStatusComponent implements OnInit {
   datePreview: any;
   myName: any;
+  date: any;
 
   constructor (private leaveService: LeaveService) {}
 
@@ -25,14 +27,16 @@ export class LeaveStatusComponent implements OnInit {
   statusPreview: any;
   note!: string;
 
+  sort: any = [];
+
   ngOnInit(): void {
     liff.init({liffId:'1657746390-LeORq250'}).then(()=>{
       this.os=liff.getOS();
       if(liff.isLoggedIn()){
-        liff.getProfile().then( profile =>{
+        liff.getProfile().then( async profile =>{
           this.profile = profile;
-          this.getInitLeaveData();
-          this.requestLeaveStatus();
+          await this.getInitLeaveData();
+          await this.requestLeaveStatus();
           // console.log(this.profile);
         }).catch(console.error);
       }else{
@@ -42,50 +46,61 @@ export class LeaveStatusComponent implements OnInit {
   }
 
   getInitLeaveData() {
-    const param = {
-      line_id: this.profile?.userId
-      // line_id: 'U415bef6926c6126ae6b7370e46714288'
-      // line_id: 'Uab6620e68248620f8c554228f90595b6'
-      // line_id: 'U29b0687712ba81f325cdd94daf68fac4'
-    }
-  
-    this.leaveService.getInitLeaveData(param).subscribe({
-      next: (res: any) => {
-        // console.log(res.leaveType);
-        this.leaveTypeName = res.leaveType;
+    return new Promise<any>((resolve, reject) => {
+      const param = {
+        line_id: this.profile?.userId
+        // line_id: 'U415bef6926c6126ae6b7370e46714288'
+        // line_id: 'Uab6620e68248620f8c554228f90595b6'
+        // line_id: 'U29b0687712ba81f325cdd94daf68fac4'
       }
+    
+      this.leaveService.getInitLeaveData(param).subscribe({
+        next: (res: any) => {
+          // console.log(res.leaveType);
+          this.leaveTypeName = res.leaveType;
+          resolve(1)
+        }
+      })
     })
   }
   
 
   requestLeaveStatus() {
-    const param = {
-      line_id: this.profile?.userId,
-      // line_id: "U415bef6926c6126ae6b7370e46714288",
-      // line_id: "Uab6620e68248620f8c554228f90595b6",
-      // line_id: "U29b0687712ba81f325cdd94daf68fac4",
-      // status: "PENDING"
-    }
-  
-    this.leaveService.requestLeaveStatus(param).subscribe({
-      next: (res: any) => {
-        // console.log(res.leave);
-        for(let i = 0; i < res.leave.length; i++) {
-          res.leave[i].start_time = moment(res.leave[i].start_time).format("YYYY-MM-DD");
-          res.leave[i].end_time = moment(res.leave[i].end_time).format("YYYY-MM-DD");
-          const data = moment(res.leave[i].start_time).diff(res.leave[i].end_time,'days');
-            this.dataLeave.push(res.leave[i]);
-            this.dataDays.push(data);
-        }
-        this.myName = res.user;
-        // this.dataLeave = res.leave;
-        // console.log(this.dataLeave);
+    return new Promise<any>((resolve, reject) => {
+      const param = {
+        line_id: this.profile?.userId,
+        // line_id: "U415bef6926c6126ae6b7370e46714288",
+        // line_id: "Uab6620e68248620f8c554228f90595b6",
+        // line_id: "U29b0687712ba81f325cdd94daf68fac4",
+        // status: "PENDING"
       }
+    
+      this.leaveService.requestLeaveStatus(param).subscribe({
+        next: (res: any) => {
+          // console.log(this.leaveTypeName);
+          for(let i = 0; i < res.leave.length; i++) {
+            res.leave[i].start_time = moment(res.leave[i].start_time).format("DD/MM/YYYY");
+            res.leave[i].end_time = moment(res.leave[i].end_time).format("DD/MM/YYYY");
+            res.leave[i].leave_type_name = getObject(this.leaveTypeName, res.leave[i].type_id, 'id');
+            res.leave[i].leave_type_name = res.leave[i].leave_type_name ? res.leave[i].leave_type_name.name : null; 
+            const data = moment(res.leave[i].start_time).diff(res.leave[i].end_time,'days');
+              this.dataDays.push(data);
+          }
+  
+          this.dataLeave = res.leave
+          this.myName = res.user;
+          // console.log(this.dataLeave);
+          resolve(1)
+        }
+      })
     })
   }
 
   getDataUser(item: any) {
     this.statusPreview = item;
+    // console.log(item)
+    // this.date = moment(item.start_time).diff(item.end_time, 'days');
+    // console.log(this.statusPreview);
     // this.datePreview = date;
   }
 

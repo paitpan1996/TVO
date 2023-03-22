@@ -3,6 +3,7 @@ import liff from '@line/liff/dist/lib';
 import * as moment from 'moment';
 import { LeaveService } from 'src/app/service/leave.service';
 import Swal from 'sweetalert2'
+import { sortData } from '../../model/liff.model'
 
 type UnPromise<T> = T extends Promise<infer X>? X : T;
 
@@ -21,8 +22,9 @@ type = 'FULL';
 typeDate = '1';
 leaveTypeName: any = [];
 leaveType!: number;
-startDate!: string;
-endDate!: string;
+startDate = moment().format('YYYY-MM-DD');
+endDate = moment().format('YYYY-MM-DD');
+date1 = new Date();
 
 startTime!: string;
 endTime!: string;
@@ -42,6 +44,7 @@ myName: any;
   leaveQuota: any;
   dataLeaveQuota: any;
   dateQuota: any;
+  sort: any = [];
 
 constructor(
   private leaveService: LeaveService
@@ -71,11 +74,12 @@ getInitLeaveData() {
 
   this.leaveService.getInitLeaveData(param).subscribe({
     next: (res: any) => {
-      // console.log(res.leaveType);
       this.leaveTypeName = res.leaveType;
       this.approverList = res.approverList;
       this.myName = res.user;
       this.getLeaveQuota();
+      this.sort = sortData(this.leaveTypeName, 1)
+      console.log(this.sort);
     }
   })
 }
@@ -88,13 +92,13 @@ const param = {
 this.leaveService.getLeaveQuota(param).subscribe({
   next: (res: any) => {
     this.leaveQuota = res.quotas;
-    console.log(res);
+    // console.log(res);
   }
 })
 }
 
 getDataLeave() {
-  console.log('test')
+  // console.log('test')
   for (let i = 0; i < this.leaveQuota.length; i++) {
     if (this.leaveQuota[i].id == this.leaveType) {
       this.dataLeaveQuota = this.leaveQuota[i];
@@ -107,8 +111,8 @@ getDataLeave() {
 }
 
 resetDate() {
-  this.startDate = '';
-  this.endDate = '';
+  this.startDate = moment().format('YYYY-MM-DD');
+  this.endDate = moment().format('YYYY-MM-DD');
 }
 
 setFromat() {
@@ -182,31 +186,33 @@ sendLeave() {
           file: this.yourFile
         }
       
-        this.leaveService.addLeave(param).subscribe({
-          next: (res: any) => {
-            Swal.fire({
-              position: 'center',
-              icon: 'success',
-              title: 'สำเร็จ !',
-              text: "บันทึกการลาของคุณเรียบร้อย",
-              showConfirmButton: false,
-              timer: 1500
-            })
-            setTimeout(() => {
-              window.location.href = 'leave-status';
-            }, 1500);
-          }, error: (err: any) => {
-            Swal.fire({
-              position: 'center',
-              icon: 'error',
-              title: 'เกิดข้อผิดพลาด !',
-              text: err.error.error,
-              showConfirmButton: true,
-              confirmButtonText: 'ตกลง',
-              confirmButtonColor: '#00833F'
-            })
-          },
-        })
+        setTimeout(() => {
+          this.leaveService.addLeave(param).subscribe({
+            next: () => {
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'สำเร็จ !',
+                text: "บันทึกการลาของคุณเรียบร้อย",
+                showConfirmButton: false,
+                timer: 1500
+              })
+              setTimeout(() => {
+                window.location.href = 'leave-status';
+              }, 1500);
+            }, error: (err: any) => {
+              Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'เกิดข้อผิดพลาด !',
+                text: err.error.error,
+                showConfirmButton: true,
+                confirmButtonText: 'ตกลง',
+                confirmButtonColor: '#00833F'
+              })
+            },
+          })
+        }, 1000);
       }
     })
   } else {

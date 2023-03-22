@@ -2,15 +2,15 @@
   <div class="row mt-4">
     <div class="col-12">
       <ng-select placeholder="ประเภทการลา..."
-      [items]="leaveTypeName"
+      [items]="sort"
       bindLabel="name"
       bindValue="id"
       [(ngModel)]="leaveType"
       (change)="getDataLeave()"></ng-select>
     </div>
   </div>
-  <div class="row">
-    <div class="col small-text">คงเหลือ : {{dateQuota}}</div>
+  <div class="row mt-2">
+    <div class="col">คงเหลือ : {{leaveType == 10 ? '0 วัน' : dateQuota}}</div>
   </div>
   <div class="row mt-2">
     <div class="col-3">
@@ -32,11 +32,11 @@
       </div>
     </div>
   </div>
-  <ng-container *ngIf="type == 'FULL'">
+  <ng-container *ngIf="type == 'FULL' else HALF ">
     <div class="row mt-2">
       <div class="col-12">
         <label>จากวันที่</label>
-        <input type="date" class="form-control" placeholder="วันเริ่ม" [(ngModel)]="startDate" />
+        <input type="date" class="form-control" placeholder="วันเริ่ม" [(ngModel)]="startDate"/>
         </div>
       </div>
       <div class="row mt-2">
@@ -46,14 +46,14 @@
       </div>
     </div>
   </ng-container>
-  <ng-container *ngIf="type != 'FULL'">
+  <ng-template #HALF>
     <div class="row mt-2">
       <div class="col-12">
         <label>เลือกวันที่</label>
         <input type="date" class="form-control" placeholder="เลือกวันที่" [(ngModel)]="startDate" [(ngModel)]="endDate" />
       </div>
     </div>
-  </ng-container>
+  </ng-template>
   <div class="row mt-2">
     <div class="col-12">
       <textarea class="form-control" rows="5" placeholder="เหตุผลการลา" [(ngModel)]="desc"></textarea>
@@ -110,6 +110,11 @@
             <h5>ช่วงเวลา : <label  *ngIf="type == 'FULL'">เต็มวัน</label> <label  *ngIf="type == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="type == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
           </div>
         </div>
+        <!-- <div class="row mt-2"  *ngIf="type == 'FULL'">
+          <div class="col-12">
+            <h5>จำนวน : <label> {{date == 0 ? 1 : date + 1}} วัน</label></h5>
+          </div>
+        </div> -->
         <!-- <ng-container *ngIf="type == '1'"> -->
           <!-- <div class="row">
             <div class="col">

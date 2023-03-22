@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import liff from '@line/liff/dist/lib';
 import * as moment from 'moment';
+import { getObject } from 'src/app/model/liff.model';
 import { LeaveService } from 'src/app/service/leave.service';
 import Swal from 'sweetalert2'
 
@@ -34,10 +35,10 @@ export class ApproveStatusComponent implements OnInit {
     liff.init({liffId:'1657746390-LeORq250'}).then(()=>{
       this.os=liff.getOS();
       if(liff.isLoggedIn()){
-        liff.getProfile().then( profile =>{
+        liff.getProfile().then( async profile =>{
           this.profile = profile;
-          this.getInitLeaveData();
-          this.requestLeaveStatus();
+          await this.getInitLeaveData();
+          await this.requestLeaveStatus();
           // console.log(this.profile);
         }).catch(console.error);
       }else{
@@ -52,16 +53,21 @@ export class ApproveStatusComponent implements OnInit {
   }
 
   getInitLeaveData() {
-    const param = {
-      line_id: this.profile?.userId,
-      // line_id: 'U415bef6926c6126ae6b7370e46714288'
-    }
-  
-    this.leaveService.getInitLeaveData(param).subscribe({
-      next: (res: any) => {
-        // console.log(res.leaveType);
-        this.leaveTypeName = res.leaveType;
+    return new Promise<any>((resolve, reject) => {
+      const param = {
+        line_id: this.profile?.userId
+        // line_id: 'U415bef6926c6126ae6b7370e46714288'
+        // line_id: 'Uab6620e68248620f8c554228f90595b6'
+        // line_id: 'U29b0687712ba81f325cdd94daf68fac4'
       }
+    
+      this.leaveService.getInitLeaveData(param).subscribe({
+        next: (res: any) => {
+          // console.log(res.leaveType);
+          this.leaveTypeName = res.leaveType;
+          resolve(1)
+        }
+      })
     })
   }
 
@@ -73,15 +79,17 @@ export class ApproveStatusComponent implements OnInit {
     }
     this.leaveService.requestLeaveStatus(param).subscribe({
       next: (res: any) => {
-        this.dataLeave = res.approve;
-        this.myName = res.user;
         for(let i = 0; i < res.approve.length; i++) {
           res.approve[i].leave.start_time = moment(res.approve[i].leave.start_time).format('DD/MM/YYYY');
           res.approve[i].leave.end_time = moment(res.approve[i].leave.end_time).format('DD/MM/YYYY');
+          res.approve[i].leave.leave_type_name = getObject(this.leaveTypeName, res.approve[i].leave.type_id, 'id');
+          res.approve[i].leave.leave_type_name = res.approve[i].leave.leave_type_name ? res.approve[i].leave.leave_type_name.name : null; 
           // const data = moment(res.approve[i].leave.start_time).diff(res.approve[i].leave.end_time, 'days');
           // this.dataDays.push('date',data);
           // console.log(data);
         }
+        this.dataLeave = res.approve;
+        this.myName = res.user;
         // console.log(res.approve);
       }
     });

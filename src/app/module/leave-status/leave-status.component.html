@@ -5,17 +5,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col-7 center">
-              <h5 class="card-title color-white" *ngIf="item.type_id == 1" >ลาป่วย</h5>
-              <h5 class="card-title color-white" *ngIf="item.type_id == 2" >ลากิจ</h5>
-              <h5 class="card-title color-white" *ngIf="item.type_id == 3" >ลาคลอดบุตร</h5>
-              <h5 class="card-title color-white" *ngIf="item.type_id == 4" >ลาเพื่อรับราชการทหาร</h5>
-              <h5 class="card-title color-white" *ngIf="item.type_id == 5" >ลาอุปสมบทและแสวงบุญ</h5>
-              <h5 class="card-title color-white" *ngIf="item.type_id == 6" >การลาเพื่อปฏิบัติธรรมและประกอบพิธีกรรมทางศาสนา</h5>
-              <h5 class="card-title color-white" *ngIf="item.type_id == 7" >ลาเพื่ออบรมหรือพัฒนาความรู้ความสามารถ</h5>
-              <h5 class="card-title color-white" *ngIf="item.type_id == 8" >ลาเพื่อจัดการงานศพ</h5>
-              <h5 class="card-title color-white" *ngIf="item.type_id == 9" >ลาอุปสมบท (หน้าไฟ)</h5>
-              <h5 class="card-title color-white" *ngIf="item.type_id == 10" >ลาเพื่อทำหมัน</h5>
-              <h5 class="card-title color-white" *ngIf="item.type_id == 11" >ลาพักร้อน</h5>
+              <h5 class="card-title color-white">{{item.leave_type_name}}</h5>
             </div>
             <div class="col-5">
               <button class="status" *ngIf="item.status == 'PENDING'">รออนุมัติ</button>
@@ -74,17 +64,7 @@
           </div>
           <div class="row mt-2">
             <div class="col-12">
-              <h5 class="card-title" *ngIf="statusPreview?.type_id == 1" >ลาป่วย</h5>
-              <h5 class="card-title" *ngIf="statusPreview?.type_id == 2" >ลากิจ</h5>
-              <h5 class="card-title" *ngIf="statusPreview?.type_id == 3" >ลาคลอดบุตร</h5>
-              <h5 class="card-title" *ngIf="statusPreview?.type_id == 4" >ลาเพื่อรับราชการทหาร</h5>
-              <h5 class="card-title" *ngIf="statusPreview?.type_id == 5" >ลาอุปสมบทและแสวงบุญ</h5>
-              <h5 class="card-title" *ngIf="statusPreview?.type_id == 6" >การลาเพื่อปฏิบัติธรรมและประกอบพิธีกรรมทางศาสนา</h5>
-              <h5 class="card-title" *ngIf="statusPreview?.type_id == 7" >ลาเพื่ออบรมหรือพัฒนาความรู้ความสามารถ</h5>
-              <h5 class="card-title" *ngIf="statusPreview?.type_id == 8" >ลาเพื่อจัดการงานศพ</h5>
-              <h5 class="card-title" *ngIf="statusPreview?.type_id == 9" >ลาอุปสมบท (หน้าไฟ)</h5>
-              <h5 class="card-title" *ngIf="statusPreview?.type_id == 10" >ลาเพื่อทำหมัน</h5>
-              <h5 class="card-title" *ngIf="statusPreview?.type_id == 11" >ลาพักร้อน</h5>
+              <h5 class="card-title">{{statusPreview?.leave_type_name}}</h5>
             </div>
           </div>
           <div class="row">
@@ -95,6 +75,11 @@
           <div class="row mt-2">
             <div class="col-12">
               <h5>ช่วงเวลา : <label  *ngIf="statusPreview?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="statusPreview?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="statusPreview?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
+            </div>
+          </div>
+          <div class="row mt-2" *ngIf="statusPreview?.leave_format == 'FULL'">
+            <div class="col-12">
+              <h5>จำนวน : <label >{{statusPreview?.leave_hour / 8}} วัน </label></h5>
             </div>
           </div>
           <div class="row">
@@ -129,10 +114,10 @@
               <h5>เอกสารแนบ</h5>
             </div>
           </div>
-          <div class="row">
-              <div class="col">
-                <img *ngIf="statusPreview?.leave?.file" class="img-user-file" src="{{'https://chatbot.newdice.co/VegetableOil/staticfiles/attachments/' + statusPreview?.leave?.file}}" alt="">
-                <label class="small-text">{{statusPreview?.leave?.file ? statusPreview?.leave?.file : 'ไม่ได้แนบไฟล์'}}</label>
+          <div class="row mt-2">
+              <div class="col text-center">
+                <img *ngIf="statusPreview?.file" class="img-user-file" src="{{'https://chatbot.newdice.co/VegetableOil/staticfiles/attachments/' + statusPreview?.file}}" alt="">
+                <label class="small-text">{{statusPreview?.file ? statusPreview?.file : 'ไม่ได้แนบไฟล์'}}</label>
               </div>
           </div>
           <div class="row mt-5">
@@ -141,6 +126,11 @@
               <button type="button" class="btn-send" (click)="send()">
                 ยกเลิกการลา
               </button>
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div class="col text-center">
+              <button class="btn-approve" data-dismiss="modal">ปิด</button>
             </div>
           </div>
         </div>

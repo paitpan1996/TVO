@@ -21,17 +21,7 @@
             </div>
             <div class="row">
               <div class="col-12 center">
-                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 1" >ลาป่วย <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
-                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 2" >ลากิจ <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
-                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 3" >ลาคลอดบุตร <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
-                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 4" >ลาเพื่อรับราชการทหาร <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
-                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 5" >ลาอุปสมบทและแสวงบุญ  <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
-                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 6" >การลาเพื่อปฏิบัติธรรมและประกอบพิธีกรรมทางศาสนา <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
-                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 7" >ลาเพื่ออบรมหรือพัฒนาความรู้ความสามารถ <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
-                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 8" >ลาเพื่อจัดการงานศพ <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
-                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 9" >ลาอุปสมบท (หน้าไฟ) <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
-                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 10" >ลาเพื่อทำหมัน <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
-                <h5 class="card-title color-white" *ngIf="list.leave.type_id == 11" >ลาพักร้อน <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
+                <h5 class="card-title color-white">{{list.leave.leave_type_name}}  <label  *ngIf="list.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="list.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="list.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
               </div>
             </div>
             <div class="row">
@@ -92,17 +82,7 @@
         </div>
         <div class="row mt-2">
           <div class="col-12">
-            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 1" >ลาป่วย</h5>
-            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 2" >ลากิจ</h5>
-            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 3" >ลาคลอดบุตร</h5>
-            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 4" >ลาเพื่อรับราชการทหาร</h5>
-            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 5" >ลาอุปสมบทและแสวงบุญ</h5>
-            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 6" >การลาเพื่อปฏิบัติธรรมและประกอบพิธีกรรมทางศาสนา</h5>
-            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 7" >ลาเพื่ออบรมหรือพัฒนาความรู้ความสามารถ</h5>
-            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 8" >ลาเพื่อจัดการงานศพ</h5>
-            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 9" >ลาอุปสมบท (หน้าไฟ)</h5>
-            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 10" >ลาเพื่อทำหมัน</h5>
-            <h5 class="card-title" *ngIf="statusPreview?.leave?.type_id == 11" >ลาพักร้อน</h5>
+            <h5 class="card-title">{{statusPreview?.leave?.leave_type_name}}</h5>
           </div>
         </div>
         <div class="row">
@@ -113,6 +93,11 @@
         <div class="row mt-2">
           <div class="col-12">
             <h5>ช่วงเวลา : <label  *ngIf="statusPreview?.leave?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="statusPreview?.leave?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="statusPreview?.leave?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
+          </div>
+        </div>
+        <div class="row mt-2" *ngIf="statusPreview?.leave?.leave_format == 'FULL'">
+          <div class="col-12">
+            <h5>จำนวน : <label>{{statusPreview?.leave?.leave_hour / 8}} วัน</label> </h5>
           </div>
         </div>
         <div class="row">
@@ -150,6 +135,11 @@
               <img *ngIf="statusPreview?.leave?.file" class="img-user-file" src="{{'https://chatbot.newdice.co/VegetableOil/staticfiles/attachments/' + statusPreview?.leave?.file}}" alt="">
               <label class="small-text">{{statusPreview?.leave?.file ? statusPreview?.leave?.file : 'ไม่ได้แนบไฟล์'}}</label>
             </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col text-center">
+            <button class="btn-approve" data-dismiss="modal">ปิด</button>
+          </div>
         </div>
       </div>
     </div>
@@ -189,7 +179,7 @@
                                       </div>
                                       <div class="row">
                                           <div class="col">
-                                              <h6 class="card-subtitle mb-2 text-muted">คงเหลือ {{getDate(list)}}</h6>
+                                              <h6 class="card-subtitle mb-2 text-muted">คงเหลือ {{ list.id == 10 ? '0 วัน' : getDate(list)}}</h6>
                                           </div>
                                       </div>
                                   </div>
@@ -199,6 +189,11 @@
                   </div>
               </div>
           </ng-container>
+          <div class="row mt-4">
+            <div class="col text-center">
+              <button class="btn-approve" data-dismiss="modal">ปิด</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
