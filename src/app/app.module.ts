@@ -14,6 +14,8 @@ import { ApproveStatusComponent } from './module/approve-status/approve-status.c
 import { EmployeeInformationComponent } from './module/employee/employee-information/employee-information.component';
 import { EmployeeHistoryComponent } from './module/employee/employee-history/employee-history.component';
 import { HistoryLeaveComponent } from './module/employee/history-leave/history-leave.component';
+import { HistoryComponent } from './module/history/history/history.component';
+import { SubHistoryComponent } from './module/history/sub-history/sub-history.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { HistoryLeaveComponent } from './module/employee/history-leave/history-l
     EmployeeInformationComponent,
     EmployeeHistoryComponent,
     HistoryLeaveComponent,
-    FilterPipe
+    FilterPipe,
+    HistoryComponent,
+    SubHistoryComponent
   ],
   imports: [
     BrowserModule,

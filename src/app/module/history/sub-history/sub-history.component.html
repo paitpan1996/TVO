@@ -1,0 +1,66 @@
+<div class="container-fluid">
+    <div class="row mt-2">
+      <div class="col">
+        <div class="row mt-2">
+          <div class="col-12 text-center">
+            <h5>ประวัติการ{{ data[0]?.leave_type?.name}}</h5>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12 text-center">
+            <h5>{{ employeeName }}</h5>
+          </div>
+        </div>
+        <ng-container *ngFor="let list of data">
+          <div class="row mt-2">
+              <div class="col">
+                  <div class="card card-border">
+                      <div class="card-body">
+                          <div class="row d-flex justify-content-center">
+                              <div class="col-2">
+                                  <img src="assets/calendar-2.svg">
+                              </div>
+                              <div class="col">
+                                <h5>{{list.start_time}} - {{list.end_time}}</h5>
+                              </div>
+                          </div>
+                          <div class="row mt-2">
+                            <div class="col">
+                              <label class="small-text">เหตุผล : {{list.reason}}</label>
+                            </div>
+                          </div>
+                          <div class="row mt-2">
+                            <div class="col">
+                              <label class="small-text">ผู้อนุมัติ :</label>
+                            </div>
+                            <div class="col text-end">
+                              <label class="small-text">{{list.leave_approvals[0]?.employee?.name_th}}</label>
+                            </div>
+                          </div>
+                          <div class="row mt-2">
+                            <div class="col">
+                              <label class="small-text">สถานะ :</label>
+                            </div>
+                            <div class="col text-end">
+                              <button class="status" *ngIf="list.status == 'PENDING'">รออนุมัติ</button>
+                              <button class="rejected" *ngIf="list.status == 'REJECTED'">ไม่อนุมัติ</button>
+                              <button class="approved" *ngIf="list.status == 'APPROVED'">อนุมัติ</button>
+                              <button class="cancelled" *ngIf="list.status == 'CANCELLED'">ยกเลิกการลา</button>
+                            </div>
+                          </div>
+                          <div class="row mt-2">
+                            <div class="col">
+                              <label class="small-text">หมายเหตุ :</label>
+                            </div>
+                            <div class="col text-end">
+                              <label class="small-text">{{list.reason ? list.reason : '-'}}</label>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+              </div>
+          </div>
+      </ng-container>
+      </div>
+    </div>
+  </div>

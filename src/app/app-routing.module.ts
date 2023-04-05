@@ -4,6 +4,8 @@ import { ApproveStatusComponent } from './module/approve-status/approve-status.c
 import { EmployeeHistoryComponent } from './module/employee/employee-history/employee-history.component';
 import { EmployeeInformationComponent } from './module/employee/employee-information/employee-information.component';
 import { HistoryLeaveComponent } from './module/employee/history-leave/history-leave.component';
+import { HistoryComponent } from './module/history/history/history.component';
+import { SubHistoryComponent } from './module/history/sub-history/sub-history.component';
 import { LeaveStatusComponent } from './module/leave-status/leave-status.component';
 import { WriteLeaveComponent } from './module/write-leave/write-leave.component';
 
@@ -14,6 +16,8 @@ const routes: Routes = [
   { path: 'employee-information' , component: EmployeeInformationComponent },
   { path: 'employee-history' , component: EmployeeHistoryComponent },
   { path: 'history-leave' , component: HistoryLeaveComponent },
+  { path: 'history' , component: HistoryComponent },
+  { path: 'sub-history' , component: SubHistoryComponent },
 ];
 
 @NgModule({

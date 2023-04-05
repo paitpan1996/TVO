@@ -179,7 +179,7 @@
                                       </div>
                                       <div class="row">
                                           <div class="col">
-                                              <h6 class="card-subtitle mb-2 text-muted">คงเหลือ {{ list.id == 10 ? '0 วัน' : getDate(list)}}</h6>
+                                              <h6 class="card-subtitle mb-2 text-muted">คงเหลือ {{ [10,12].includes(list.id) ? 'ลาได้ตามใบรับรองแพทย์' : getDate(list)}}</h6>
                                           </div>
                                       </div>
                                   </div>

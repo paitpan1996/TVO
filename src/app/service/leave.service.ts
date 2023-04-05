@@ -56,4 +56,8 @@ export class LeaveService {
     return this.http.post(this.url + this.leave + 'getEmployerLeaveHistory', param);
   }
 
+  getSelfApprovedLeaveHistorybyLeaveTypeId(param: any) {
+    return this.http.post(this.url + this.leave + 'getSelfApprovedLeaveHistorybyLeaveTypeId', param);
+  }
+
 }

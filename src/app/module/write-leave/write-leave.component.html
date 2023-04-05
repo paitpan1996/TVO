@@ -10,7 +10,8 @@
     </div>
   </div>
   <div class="row mt-2">
-    <div class="col">คงเหลือ : {{leaveType == 10 ? '0 วัน' : dateQuota}}</div>
+    <div class="col"*ngIf="[10,12].includes(leaveType)"> ลาได้ตามใบรับรองแพทย์</div>
+    <div class="col" *ngIf="![10,12].includes(leaveType)">คงเหลือ : {{dateQuota}}</div>
   </div>
   <div class="row mt-2">
     <div class="col-3">

@@ -102,11 +102,12 @@ getDataLeave() {
   for (let i = 0; i < this.leaveQuota.length; i++) {
     if (this.leaveQuota[i].id == this.leaveType) {
       this.dataLeaveQuota = this.leaveQuota[i];
+      // console.log(this.dataLeaveQuota);
     }
   }
   let date
   date = this.dataLeaveQuota?.matchQuota - this.dataLeaveQuota?.matchUse
-  this.dateQuota = date % 1 == 0 ? date + ' วัน' : Math.floor(date) + ' วันครึ่ง'
+  this.dateQuota = date % 1 == 0 ? date + '/' + this.dataLeaveQuota.matchQuota + ' วัน' : Math.floor(date) + '/' + this.dataLeaveQuota.matchQuota + ' วันครึ่ง'
   //todo
 }
 
