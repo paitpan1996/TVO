@@ -1,0 +1,58 @@
+.fa-book {
+    background-color: #00833F;
+    border-radius: 50%;
+    padding: 4%;
+}
+
+::ng-deep .mat-mdc-icon-button.mat-mdc-button-base {
+    padding: 0;
+}
+
+::ng-deep .mat-mdc-icon-button {
+    --mat-mdc-button-persistent-ripple-color: #000000;
+    --mat-mdc-button-ripple-color: rgba(255, 255, 255, 0.1);
+}
+
+.mat-datepicker-toggle, .mat-datepicker-content .mat-calendar-next-button, .mat-datepicker-content .mat-calendar-previous-button {
+    color: #000000;
+}
+  
+.form-inline {
+    display: flex;
+    align-items: flex-start;
+    // align-items: initial;
+}
+
+.form-heigh {
+    width: 80%;
+}
+
+.btn-send {
+    color: white;
+    background-color: #00833F;
+    border-radius: 5px;
+    padding: 0.5rem;
+    width: 90%;
+    border: none;
+}
+
+.form-control {
+    border-radius: 10px !important;
+}
+
+::ng-deep .ng-select .ng-select-container {
+    border-radius: 10px !important;
+}
+
+.btn-upload {
+    border: solid 2px #585858;
+    color: white;
+    background-color: #585858;
+    border-radius: 5px;
+    padding: 0.5rem;
+    width: 50%;
+}
+
+.img-preview {
+    width: 200px
+}

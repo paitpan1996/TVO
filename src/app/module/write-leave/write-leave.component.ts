@@ -107,7 +107,7 @@ getDataLeave() {
   }
   let date
   date = this.dataLeaveQuota?.matchQuota - this.dataLeaveQuota?.matchUse
-  this.dateQuota = date % 1 == 0 ? date + '/' + this.dataLeaveQuota.matchQuota + ' วัน' : Math.floor(date) + '/' + this.dataLeaveQuota.matchQuota + ' วันครึ่ง'
+  this.dateQuota = date % 1 == 0 ? date + '/' + this.dataLeaveQuota.matchQuota + ' วัน' : Math.floor(date) +'.5' + '/' + this.dataLeaveQuota.matchQuota + ' วัน'
   //todo
 }
 

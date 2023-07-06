@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <ng-container *ngFor="let item of dataLeave">
-    <!-- <ng-container *ngFor="let date of dataDays"> -->
+    <ng-container *ngIf="item.status == 'PENDING'">
       <div class="card card-color mt-2" data-toggle="modal" data-target="#exampleModalCenter" (click)="getDataUser(item)">
         <div class="card-body">
           <div class="row">
@@ -9,9 +9,9 @@
             </div>
             <div class="col-5">
               <button class="status" *ngIf="item.status == 'PENDING'">รออนุมัติ</button>
-              <button class="rejected" *ngIf="item.status == 'REJECTED'">ไม่อนุมัติ</button>
+              <!-- <button class="rejected" *ngIf="item.status == 'REJECTED'">ไม่อนุมัติ</button>
               <button class="approved" *ngIf="item.status == 'APPROVED'">อนุมัติ</button>
-              <button class="cancelled" *ngIf="item.status == 'CANCELLED'">ยกเลิกการลา</button>
+              <button class="cancelled" *ngIf="item.status == 'CANCELLED'">ยกเลิกการลา</button> -->
             </div>
           </div>
           <div class="row">
@@ -38,7 +38,7 @@
           </div>
         </div>
       </div>
-    <!-- </ng-container> -->
+    </ng-container>
   </ng-container>
 </div>
 

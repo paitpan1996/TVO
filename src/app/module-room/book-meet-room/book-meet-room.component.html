@@ -1,0 +1,109 @@
+<div class="container-fluid">
+    <div class="row mt-4">
+        <div class="col text-end">
+            <div class="form-inline">
+                <input class="form-control form-heigh" matInput  placeholder="เลือกวันที่"
+                [matDatepicker]="pickerSingle" [(ngModel)]="allow_to_date" disabled>
+                <mat-datepicker-toggle matIconSuffix [for]="pickerSingle"></mat-datepicker-toggle>
+                <mat-datepicker #pickerSingle disabled="false"></mat-datepicker>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <input type="time" class="form-control">
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <input type="time" class="form-control">
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <ng-select
+            placeholder="เลือกห้องประชุม">
+            </ng-select>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <input type="text" class="form-control" placeholder="จำนวนผู้เข้าร่วม...">
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <ng-select
+            [items]="room"
+            bindLabel="label"
+            bindValue="value"
+            placeholder="เลือกอุปกรณ์"
+            [multiple]="true"
+            groupBy="selectedAllGroup"
+            [selectableGroup]="true">
+            <ng-template 
+                    ng-optgroup-tmp let-item="item" 
+                    let-item$="item$" let-index="index">
+                    <input id="item-{{index}}" type="checkbox"
+                    [ngModel] ="item$.selected"/> Select All
+            </ng-template>
+            </ng-select>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <input type="text" class="form-control" placeholder="อาหารเครื่องดื่ม..." [(ngModel)]="obj" (keyup.enter)="addData()">
+        </div>
+    </div>
+    <ng-container *ngIf="data">
+        <div class="row" *ngFor="let item of data; index as i">
+            <div class="col">
+                <span> <i class="fa fa-window-close" aria-hidden="true" (click)="delete(i)"></i>  {{item}} </span>
+            </div>
+        </div>
+    </ng-container>
+    <div class="row mt-3">
+        <div class="col">
+            <ng-select
+            placeholder="แบบห้อง">
+            </ng-select>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <input type="text" class="form-control" placeholder="รูปแบบห้อง...">
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-12">
+            <button class="btn-upload" (click)="fileUpload.click()">อัปโหลด</button>
+            <input type="file" (change)="getFile($event)" accept=".png" #fileUpload hidden/> <br />
+            <span >{{ filePreview ? filePreview : 'รับรองไฟล์ PNG ขนาดไฟล์ต้องไม่เกิน 5 mb'}}</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+          <img class="img-preview" src="{{url}}" alt="">
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <textarea class="form-control" cols="30" rows="3" 
+            placeholder="มีความประสงค์ขอใช้ห้องประชุมเพื่อ ..."></textarea>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <ng-select
+            placeholder="Cost center">
+            </ng-select>
+        </div>
+    </div>
+    <div class="row mt-3 mb-4">
+        <div class="col-12 text-center">
+          <button  type="button" class="btn-send" (click)="send()">
+            จอง
+          </button>
+        </div>
+      </div>
+</div>
