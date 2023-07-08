@@ -5,7 +5,7 @@ import { getObject } from 'src/app/model/liff.model';
 import { LeaveService } from 'src/app/service/leave.service';
 import Swal from 'sweetalert2'
 
-type UnPromise<T> = T extends Promise<infer X>? X : T;
+type UnPromise<T> = T extends Promise<infer X> ? X : T;
 
 @Component({
   selector: 'app-approve-status',
@@ -16,6 +16,7 @@ export class ApproveStatusComponent implements OnInit {
 
   leaveTypeName: any;
   dataLeave: any;
+  dataUser: any;
   param: any;
   dataDays: any = [];
   myName: any;
@@ -24,43 +25,44 @@ export class ApproveStatusComponent implements OnInit {
   data: any;
   namePreview: any;
 
-  constructor(private leaveService: LeaveService) {}
+  constructor(private leaveService: LeaveService) { }
 
-  os: ReturnType<typeof liff.getOS>;  
+  os: ReturnType<typeof liff.getOS>;
   profile!: UnPromise<ReturnType<typeof liff.getProfile>>;
 
   note!: string;
 
   ngOnInit(): void {
-    liff.init({liffId:'1657746390-LeORq250'}).then(()=>{
-      this.os=liff.getOS();
-      if(liff.isLoggedIn()){
-        liff.getProfile().then( async profile =>{
+    liff.init({ liffId: '1657746390-LeORq250' }).then(() => {
+      this.os = liff.getOS();
+      if (liff.isLoggedIn()) {
+        liff.getProfile().then(async profile => {
           this.profile = profile;
           await this.getInitLeaveData();
           await this.requestLeaveStatus();
           // console.log(this.profile);
         }).catch(console.error);
-      }else{
+      } else {
         liff.login()
       }
     }).catch(console.error);
   }
 
   checkStatus() {
-    localStorage.setItem('myname',  this.myName.name_th);
+    localStorage.setItem('myname', this.myName.name_th);
     window.location.href = 'employee-information';
   }
 
   getInitLeaveData() {
     return new Promise<any>((resolve, reject) => {
       const param = {
-        line_id: this.profile?.userId
+        // line_id: this.profile?.userId
         // line_id: 'U415bef6926c6126ae6b7370e46714288'
         // line_id: 'Uab6620e68248620f8c554228f90595b6'
-        // line_id: 'U29b0687712ba81f325cdd94daf68fac4'
+        line_id: 'U29b0687712ba81f325cdd94daf68fac4' // พี่คิง
+        // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37' // แชมป์
       }
-    
+
       this.leaveService.getInitLeaveData(param).subscribe({
         next: (res: any) => {
           // console.log(res.leaveType);
@@ -73,26 +75,112 @@ export class ApproveStatusComponent implements OnInit {
 
   requestLeaveStatus() {
     const param = {
-      line_id: this.profile?.userId,
+      // line_id: this.profile?.userId,
       // line_id: 'U415bef6926c6126ae6b7370e46714288'
-      // line_id: 'U29b0687712ba81f325cdd94daf68fac4'
+      line_id: 'U29b0687712ba81f325cdd94daf68fac4' // พี่คิง
+      // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37' // แชมป์
     }
-    this.leaveService.requestLeaveStatus(param).subscribe({
+
+    this.leaveService.requestLeaveStatusFix(param).subscribe({
       next: (res: any) => {
-        for(let i = 0; i < res.approve.length; i++) {
-          res.approve[i].leave.start_time = moment(res.approve[i].leave.start_time).format('DD/MM/YYYY');
-          res.approve[i].leave.end_time = moment(res.approve[i].leave.end_time).format('DD/MM/YYYY');
-          res.approve[i].leave.leave_type_name = getObject(this.leaveTypeName, res.approve[i].leave.type_id, 'id');
-          res.approve[i].leave.leave_type_name = res.approve[i].leave.leave_type_name ? res.approve[i].leave.leave_type_name.name : null; 
-          // const data = moment(res.approve[i].leave.start_time).diff(res.approve[i].leave.end_time, 'days');
-          // this.dataDays.push('date',data);
-          // console.log(data);
+        for (let i = 0; i < res.approve.length; i++) {
+          const leave = res.approve[i].leave;
+          leave.start_time = moment(leave.start_time).format('DD/MM/YYYY');
+          leave.end_time = moment(leave.end_time).format('DD/MM/YYYY');
+          leave.leave_type_name = getObject(this.leaveTypeName, leave.type_id, 'id');
+          leave.leave_type_name = leave.leave_type_name ? leave.leave_type_name.name : null;
+
+          const leaveApprovals = leave.leave_approvals;
+
+          if (leaveApprovals[0]) {
+            const firstApprover = leaveApprovals[0];
+            if (firstApprover.approver_id !== res.user.id && firstApprover.approver_approver_priority === 1) {
+              console.log("ผู้อนุมัติขั้นแรกไม่ใช่คุณ");
+            } else if (firstApprover.approver_id === res.user.id && firstApprover.approver_approver_priority === 1) {
+              console.log("ผู้อนุมัติขั้นแรกคือคุณ");
+            }
+          }
+
+          if (leaveApprovals[1]) {
+            const secondApprover = leaveApprovals[1];
+            if (secondApprover.approver_id !== res.user.id && secondApprover.approver_approver_priority === 2) {
+              console.log("ผู้อนุมัติขั้นสองไม่ใช่คุณ");
+            } else if (secondApprover.approver_id === res.user.id && secondApprover.approver_approver_priority === 2) {
+              console.log("ผู้อนุมัติขั้นสองคือคุณ");
+            }
+          }
+
+          if (leaveApprovals[2]) {
+            const thirdApprover = leaveApprovals[2];
+            if (thirdApprover.approver_id !== res.user.id && thirdApprover.approver_approver_priority === 3) {
+              console.log("ผู้อนุมัติขั้นสามไม่ใช่คุณ");
+            } else if (thirdApprover.approver_id === res.user.id && thirdApprover.approver_approver_priority === 3) {
+              console.log("ผู้อนุมัติขั้นสามคือคุณ");
+            }
+          }
+
+          
         }
         this.dataLeave = res.approve;
-        this.myName = res.user;
-        // console.log(res.approve);
+          this.myName = res.user;
+          console.log(res);
+          console.log(res.approve);
       }
     });
+
+
+
+    // this.leaveService.requestLeaveStatus(param).subscribe({
+    //   next: (res: any) => {
+    //     for(let i = 0; i < res.approve.length; i++) {
+    //       res.approve[i].leave.start_time = moment(res.approve[i].leave.start_time).format('DD/MM/YYYY');
+    //       res.approve[i].leave.end_time = moment(res.approve[i].leave.end_time).format('DD/MM/YYYY');
+    //       res.approve[i].leave.leave_type_name = getObject(this.leaveTypeName, res.approve[i].leave.type_id, 'id');
+    //       res.approve[i].leave.leave_type_name = res.approve[i].leave.leave_type_name ? res.approve[i].leave.leave_type_name.name : null; 
+    //       if(res.approve[i].leave.leave_approvals[0]){
+    //         if(res.approve[i].leave.leave_approvals[0].approver_id != res.user.id && res.approve[i].leave.leave_approvals[0].approver_approver_priority == 1){
+    //           console.log("ผู้อนุมัติขั้นแรกไม่ใช่คุณ");
+    //         }else if(res.approve[i].leave.leave_approvals[0].approver_id == res.user.id && res.approve[i].leave.leave_approvals[0].approver_approver_priority == 1){
+    //           console.log("ผู้อนุมัติขั้นแรกคือคุณ");
+    //         }
+    //       }
+    //       if(res.approve[i].leave.leave_approvals[1]){
+    //         if(res.approve[i].leave.leave_approvals[1].approver_id != res.user.id && res.approve[i].leave.leave_approvals[1].approver_approver_priority == 2){
+    //           console.log("ผู้อนุมัติขั้นสองไม่ใช่คุณ");
+    //         }else if(res.approve[i].leave.leave_approvals[1].approver_id == res.user.id && res.approve[i].leave.leave_approvals[1].approver_approver_priority == 2){
+    //           console.log("ผู้อนุมัติขั้นสองคือคุณ");
+    //         }
+    //       }
+    //       if(res.approve[i].leave.leave_approvals[2]){
+    //         if(res.approve[i].leave.leave_approvals[2].approver_id != res.user.id && res.approve[i].leave.leave_approvals[2].approver_approver_priority == 3){
+    //           console.log("ผู้อนุมัติขั้นสามไม่ใช่คุณ");
+    //         }else if(res.approve[i].leave.leave_approvals[2].approver_id == res.user.id && res.approve[i].leave.leave_approvals[2].approver_approver_priority == 3){
+    //           console.log("ผู้อนุมัติขั้นสามคือคุณ");
+    //         }
+    //       }
+
+    //       // if(res.approve[i].leave.leave_approvals[1].approver_id != res.user.id && res.approve[i].leave.leave_approvals[0].approver_approver_priority == 2){
+    //       //   console.log("ผู้อนุมัติขั้นสองไม่ใช่คุณ");
+    //       // }else if(res.approve[i].leave.leave_approvals[1].approver_id == res.user.id && res.approve[i].leave.leave_approvals[0].approver_approver_priority == 2){
+    //       //   console.log("ผู้อนุมัติขั้นสองคือคุณ");
+    //       // }
+    //       // if(res.approve[i].leave.leave_approvals[2].approver_id != res.user.id && res.approve[i].leave.leave_approvals[0].approver_approver_priority == 3){
+    //       //   console.log("ผู้อนุมัติขั้นสามไม่ใช่คุณ");
+    //       // }else if(res.approve[i].leave.leave_approvals[2].approver_id == res.user.id && res.approve[i].leave.leave_approvals[0].approver_approver_priority == 3){
+    //       //   console.log("ผู้อนุมัติขั้นสามคือคุณ");
+    //       // }
+    //       // const data = moment(res.approve[i].leave.start_time).diff(res.approve[i].leave.end_time, 'days');
+    //       // this.dataDays.push('date',data);
+    //       // console.log(data);
+    //     }
+    //     this.dataLeave = res.approve;
+    //     this.myName = res.user;
+    //     console.log(res);
+    //     console.log(res.approve);
+    //   }
+    // });
+
+
   }
 
   checkLeave(item: any) {
@@ -112,9 +200,10 @@ export class ApproveStatusComponent implements OnInit {
   cilckApprove(item: any) {
 
     const param = {
-      line_id: this.profile?.userId,
+      // line_id: this.profile?.userId,
       // line_id: 'U415bef6926c6126ae6b7370e46714288',
-      // line_id: 'U29b0687712ba81f325cdd94daf68fac4',
+      line_id: 'U29b0687712ba81f325cdd94daf68fac4', // พี่คิง
+      // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37', // แชมป์
       leave_id: item.id,
       result: 'APPROVED'
     }
@@ -134,18 +223,32 @@ export class ApproveStatusComponent implements OnInit {
           this.requestLeaveStatus();
         }, 1500);
       }, error: (err) => {
-        Swal.fire({
-          position: 'center',
-          icon: 'error',
-          title: 'เกิดข้อผิดพลาด !',
-          text: "ไม่สามารถอนุมัติการลาได้ กรุณาติดต่อแอดมิน",
-          showConfirmButton: true,
-          confirmButtonText: 'ตกลง',
-          confirmButtonColor: '#00833F'
-        })
+        // console.log(err);
+        if (err.error.error) {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'เกิดข้อผิดพลาด !',
+            text: err.error.error,
+            showConfirmButton: true,
+            confirmButtonText: 'ตกลง',
+            confirmButtonColor: '#00833F'
+          })
+        } else {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'เกิดข้อผิดพลาด !',
+            text: "ไม่สามารถอนุมัติการลาได้ กรุณาติดต่อแอดมิน",
+            showConfirmButton: true,
+            confirmButtonText: 'ตกลง',
+            confirmButtonColor: '#00833F'
+          })
+        }
+
       }
     })
-    
+
   }
 
   sentData(item: any) {
@@ -155,16 +258,17 @@ export class ApproveStatusComponent implements OnInit {
 
   cilckNotApprove() {
 
-    if(this.note) {
+    if (this.note) {
       const param = {
-        line_id: this.profile?.userId,
+        // line_id: this.profile?.userId,
         // line_id: 'U415bef6926c6126ae6b7370e46714288',
-        // line_id: 'U29b0687712ba81f325cdd94daf68fac4',
+        line_id: 'U29b0687712ba81f325cdd94daf68fac4', // พี่คิง
+        // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37', // แชมป์
         leave_id: this.param.id,
         result: 'REJECTED',
         note: this.note
       }
-  
+
       this.leaveService.approveLeave(param).subscribe({
         next: (res: any) => {
           Swal.fire({
@@ -209,6 +313,10 @@ export class ApproveStatusComponent implements OnInit {
     this.datePreview = moment(item.end_time).diff(item.start_time, 'days');
   }
 
+  getUserName(item: any) {
+    this.namePreview = item.user.name_th
+  }
+
   getDate(item: any) {
     let date
     date = item.matchQuota - item.matchUse
@@ -216,7 +324,7 @@ export class ApproveStatusComponent implements OnInit {
   }
 
   openPicker() {
-    
+
   }
 
 }

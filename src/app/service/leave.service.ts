@@ -29,6 +29,9 @@ export class LeaveService {
   requestLeaveStatus(param: any) {
     return this.http.post(this.url + this.leave + 'requestLeaveStatus', param);
   }
+  requestLeaveStatusFix(param: any) {
+    return this.http.post(this.url + this.leave + 'requestLeaveStatusFix', param);
+  }
 
   approveLeave(param: any) {
     return this.http.put(this.url + this.leave + 'approveLeave', param);

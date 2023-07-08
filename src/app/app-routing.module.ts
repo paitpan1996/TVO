@@ -15,7 +15,7 @@ import { LeaveHistoryComponent } from './module/leave-history/leave-history.comp
 const routes: Routes = [
   { path: 'write-leave' , component: WriteLeaveComponent },
   { path: 'leave-status' , component: LeaveStatusComponent },
-  { path: 'appove-status' , component: ApproveStatusComponent },
+  { path: 'approve-status' , component: ApproveStatusComponent },
   { path: 'employee-information' , component: EmployeeInformationComponent },
   { path: 'employee-history' , component: EmployeeHistoryComponent },
   { path: 'history-leave' , component: HistoryLeaveComponent },
