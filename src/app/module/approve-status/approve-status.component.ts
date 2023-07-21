@@ -56,10 +56,10 @@ export class ApproveStatusComponent implements OnInit {
   getInitLeaveData() {
     return new Promise<any>((resolve, reject) => {
       const param = {
-        // line_id: this.profile?.userId
+        line_id: this.profile?.userId
         // line_id: 'U415bef6926c6126ae6b7370e46714288'
         // line_id: 'Uab6620e68248620f8c554228f90595b6'
-        line_id: 'U29b0687712ba81f325cdd94daf68fac4' // พี่คิง
+        // line_id: 'U29b0687712ba81f325cdd94daf68fac4' // พี่คิง
         // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37' // แชมป์
       }
 
@@ -75,9 +75,9 @@ export class ApproveStatusComponent implements OnInit {
 
   requestLeaveStatus() {
     const param = {
-      // line_id: this.profile?.userId,
+      line_id: this.profile?.userId,
       // line_id: 'U415bef6926c6126ae6b7370e46714288'
-      line_id: 'U29b0687712ba81f325cdd94daf68fac4' // พี่คิง
+      // line_id: 'U29b0687712ba81f325cdd94daf68fac4' // พี่คิง
       // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37' // แชมป์
     }
 
@@ -200,9 +200,9 @@ export class ApproveStatusComponent implements OnInit {
   cilckApprove(item: any) {
 
     const param = {
-      // line_id: this.profile?.userId,
+      line_id: this.profile?.userId,
       // line_id: 'U415bef6926c6126ae6b7370e46714288',
-      line_id: 'U29b0687712ba81f325cdd94daf68fac4', // พี่คิง
+      // line_id: 'U29b0687712ba81f325cdd94daf68fac4', // พี่คิง
       // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37', // แชมป์
       leave_id: item.id,
       result: 'APPROVED'
@@ -260,9 +260,9 @@ export class ApproveStatusComponent implements OnInit {
 
     if (this.note) {
       const param = {
-        // line_id: this.profile?.userId,
+        line_id: this.profile?.userId,
         // line_id: 'U415bef6926c6126ae6b7370e46714288',
-        line_id: 'U29b0687712ba81f325cdd94daf68fac4', // พี่คิง
+        // line_id: 'U29b0687712ba81f325cdd94daf68fac4', // พี่คิง
         // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37', // แชมป์
         leave_id: this.param.id,
         result: 'REJECTED',

@@ -1,0 +1,40 @@
+<div class="container-fluid">
+        <div class="row mt-3 d-flex">
+            <div class="col-12">
+                <h3 class="text-center">ประวัติการรักษาพยาบาล</h3>
+            </div>
+        </div>
+    <ng-container *ngIf="dataMedical && dataMedical.length > 0; else noData">
+        <ng-container *ngFor="let item of dataMedical">
+            <div class="card card-color mt-2">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 center">
+                            <h5 class="card-title color-white">วันที่ : {{ item.healthdate_}}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 center">
+                            <h5 class="card-title color-white">รายการ : {{ item.sickdetail}}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 center">
+                            <h5 class="card-title color-white">สถานที่ : {{ item.hospitalname}}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 center">
+                            <h5 class="card-title color-white">ยอดเงิน : {{ item.amountpay}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+</div>
+<ng-template #noData>
+    <h4 class="text-sarabun text-center mt-3">
+        ไม่มีรายการ
+    </h4>
+</ng-template>

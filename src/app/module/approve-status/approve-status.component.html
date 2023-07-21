@@ -7,12 +7,7 @@
       <img src="assets/user.svg" alt="" (click)="checkStatus()">
     </div>
   </div>
-  <div class="row mt-2 d-flex">
-    <div class="col">
-      <h1 class="text-center">{{ myName?.name_th}}</h1>
-    </div>
-  </div>
-  <ng-container *ngIf="dataLeave && dataLeave.length > 0; else loadingData">
+  <ng-container *ngIf="dataLeave && dataLeave.length > 0; else noData">
     <ng-container *ngFor="let list of dataLeave">
       <!-- <ng-container *ngFor="let item of dataDays"> -->
       <div class="card card-color mt-2" (click)="getDataUser(list)">
@@ -269,16 +264,8 @@
     </div>
   </div>
 </div>
-<ng-template #loadingData>
-  <h6 class="text-sarabun text-center">
-    <div class="spinner-border text-success" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-    กำลังโหลดข้อมูล
-  </h6>
-</ng-template>
 <ng-template #noData>
-  <h6 class="text-sarabun text-center">
-    ไม่มีการลาให้อนุมัติ
-  </h6>
+  <h4 class="text-sarabun text-center mt-3">
+    ไม่มีรายการให้อนุมัติ
+  </h4>
 </ng-template>
