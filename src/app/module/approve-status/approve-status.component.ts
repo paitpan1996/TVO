@@ -61,6 +61,7 @@ export class ApproveStatusComponent implements OnInit {
         // line_id: 'Uab6620e68248620f8c554228f90595b6'
         // line_id: 'U29b0687712ba81f325cdd94daf68fac4' // พี่คิง
         // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37' // แชมป์
+        // line_id: 'U9ee89380558e59ac227139a34b6e293e' // ลูกค้า สำหรับเทส
       }
 
       this.leaveService.getInitLeaveData(param).subscribe({
@@ -79,6 +80,7 @@ export class ApproveStatusComponent implements OnInit {
       // line_id: 'U415bef6926c6126ae6b7370e46714288'
       // line_id: 'U29b0687712ba81f325cdd94daf68fac4' // พี่คิง
       // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37' // แชมป์
+      // line_id: 'U9ee89380558e59ac227139a34b6e293e' // ลูกค้า สำหรับเทส
     }
 
     this.leaveService.requestLeaveStatusFix(param).subscribe({
@@ -187,6 +189,7 @@ export class ApproveStatusComponent implements OnInit {
     this.namePreview = item.employee.name_th
     const param = {
       approver_line_id: this.profile?.userId,
+      // approver_line_id: 'U9ee89380558e59ac227139a34b6e293e',
       employee_id: item.employee_id
     }
 
@@ -204,6 +207,7 @@ export class ApproveStatusComponent implements OnInit {
       // line_id: 'U415bef6926c6126ae6b7370e46714288',
       // line_id: 'U29b0687712ba81f325cdd94daf68fac4', // พี่คิง
       // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37', // แชมป์
+      // line_id: 'U9ee89380558e59ac227139a34b6e293e', // ลูกค้า สำหรับเทส
       leave_id: item.id,
       result: 'APPROVED'
     }
@@ -264,6 +268,7 @@ export class ApproveStatusComponent implements OnInit {
         // line_id: 'U415bef6926c6126ae6b7370e46714288',
         // line_id: 'U29b0687712ba81f325cdd94daf68fac4', // พี่คิง
         // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37', // แชมป์
+        // line_id: 'U9ee89380558e59ac227139a34b6e293e', // ลูกค้า สำหรับเทส
         leave_id: this.param.id,
         result: 'REJECTED',
         note: this.note
