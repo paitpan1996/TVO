@@ -17,6 +17,7 @@ export class WriteLeaveComponent implements OnInit {
   os: ReturnType<typeof liff.getOS>;
   profile!: UnPromise<ReturnType<typeof liff.getProfile>>;
 
+  filePreviewUrl: string | ArrayBuffer | null = null;
 yourFile: any;
 type = 'FULL';
 typeDate = '1';
@@ -70,6 +71,7 @@ getInitLeaveData() {
   const param = {
     line_id: this.profile?.userId
     // line_id: 'U415bef6926c6126ae6b7370e46714288'
+    // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37',
   }
 
   this.leaveService.getInitLeaveData(param).subscribe({
@@ -141,20 +143,60 @@ setFromat() {
   this.minutes = moment(this.startDatePerview).diff(this.endDatePreview, 'minutes');
 }
 
+// getFile(fileInput: any) {
+//   const file = fileInput.target.files[0];
+//   console.log(file);
+//   this.filePreview = file.name;
+
+//   const reader = new FileReader();
+//       reader.onload = (innerFileInput: any) => {
+//         this.url = innerFileInput.target.result;
+//   }
+//   reader.readAsDataURL(fileInput.target.files[0]);
+
+//   this.fd = new FormData();
+//   this.fd.append('userAttachmentFile', file);
+
+// }
 getFile(fileInput: any) {
   const file = fileInput.target.files[0];
+
+  // Log the selected file object to the console
   console.log(file);
+
+  // Store the file name for display or further processing
   this.filePreview = file.name;
 
+  // Read the file and set the URL for preview or other purposes
   const reader = new FileReader();
-      reader.onload = (innerFileInput: any) => {
-        this.url = innerFileInput.target.result;
-  }
-  reader.readAsDataURL(fileInput.target.files[0]);
+  reader.onload = (innerFileInput: any) => {
+    this.url = innerFileInput.target.result;
+  };
+  reader.readAsDataURL(file);
 
+  // Create a new FormData instance to prepare for file upload
   this.fd = new FormData();
   this.fd.append('userAttachmentFile', file);
+}
 
+onFileSelected(event: any): void {
+  const file: File = event.target.files[0];
+
+  if (file) {
+    // Read the file and set the preview URL
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.filePreviewUrl = reader.result;
+    };
+    reader.readAsDataURL(file);
+  } else {
+    this.filePreviewUrl = null;
+  }
+}
+
+deleteFilefromInput() {
+  this.filePreview = '';
+  this.fd = new FormData();
 }
 sendLeave() {
   
@@ -179,6 +221,7 @@ sendLeave() {
         const param = {
           line_id: this.profile?.userId,
           // line_id: 'U415bef6926c6126ae6b7370e46714288',
+          // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37',
           reason: this.desc ? this.desc : 'ไม่ได้ระบุเหตุผล',
           type_id: +this.leaveType,
           leave_format: this.type,
@@ -220,6 +263,7 @@ sendLeave() {
     const param = {
       line_id: this.profile?.userId,
       // line_id: 'U415bef6926c6126ae6b7370e46714288',
+      // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37',
       reason: this.desc ? this.desc : 'ไม่ได้ระบุเหตุผล',
       type_id: +this.leaveType,
       leave_format: this.type,

@@ -1,171 +1,187 @@
 <div class="container-fluid">
-  <ng-container *ngFor="let item of dataLeave">
-    <ng-container *ngIf="item.status == 'PENDING'">
-      <div class="card card-color mt-2" data-toggle="modal" data-target="#exampleModalCenter" (click)="getDataUser(item)">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-7 center">
-              <h5 class="card-title color-white">{{item.leave_type_name}}</h5>
-            </div>
-            <div class="col-5">
-              <button class="status" *ngIf="item.status == 'PENDING'">รออนุมัติ</button>
-              <!-- <button class="rejected" *ngIf="item.status == 'REJECTED'">ไม่อนุมัติ</button>
-              <button class="approved" *ngIf="item.status == 'APPROVED'">อนุมัติ</button>
-              <button class="cancelled" *ngIf="item.status == 'CANCELLED'">ยกเลิกการลา</button> -->
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12 center">
-              <h5 class="card-title color-white">{{item.start_time}} - {{item.end_time}}</h5>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-6">
-              <div class="row">
-                <div class="col-12">
-                  <h5 class="card-title color-white">{{item.reason}}</h5>
-                </div>
+  <ng-container *ngIf="dataLeave && dataLeave.length >0; else noData">
+    <ng-container *ngFor="let item of dataLeave">
+      <ng-container *ngIf="item.status == 'PENDING'">
+        <div class="card card-color mt-2" data-toggle="modal" data-target="#exampleModalCenter"
+          (click)="getDataUser(item)">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-7 center">
+                <h5 class="card-title color-white">{{item.leave_type_name}}</h5>
               </div>
-              <div class="row">
-                <div class="col-12">
-                  <button class="approve">ผู้อนุมัติ : {{item.leave_approvals[0]?.employee.name_th}}</button>
-                </div>
-              </div>
-            </div>
-            <div class="col-6 img-profile">
-              <img class="img-profile" src="{{profile ? profile.pictureUrl : ''}}" alt="" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </ng-container>
-  </ng-container>
-</div>
-
-<!-- modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="row mt-2 text-center">
-            <div class="col-12">
-              <h5>รายละเอียด</h5>
-            </div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-12 d-flex justify-content-center">
-              <img class="img-profile" src="{{profile ? profile.pictureUrl : ''}}" />
-            </div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-12 text-center">
-              <h5>{{myName ? myName.name_th : ''}}</h5>
-            </div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-12">
-              <h5 class="card-title">{{statusPreview?.leave_type_name}}</h5>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <!-- <label class="small-text">คงเหลือ 3 ชั่วโมง</label> -->
-            </div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-12">
-              <h5>ช่วงเวลา : <label  *ngIf="statusPreview?.leave_format == 'FULL'">เต็มวัน</label> <label  *ngIf="statusPreview?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="statusPreview?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
-            </div>
-          </div>
-          <div class="row mt-2" *ngIf="statusPreview?.leave_format == 'FULL'">
-            <div class="col-12">
-              <h5>จำนวน : <label >{{statusPreview?.leave_hour / 8}} วัน </label></h5>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <label class="small-text">{{statusPreview?.start_time}} - {{statusPreview?.end_time}}</label>
-            </div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-12">
-              <h5>เหตุผลการลา</h5>
-            </div>
-          </div>
-          <div class="row">
-              <div class="col">
-                <label class="small-text">{{statusPreview?.reason}}</label>
-              </div>
-          </div>
-          <ng-container  *ngFor="let item of statusPreview?.leave_approvals; index as i">
-            <div class="row mt-2">
-              <div class="col-12">
-                <h5>  <img src="assets/tick-circle.svg" /> ผู้อนุมัติ : {{item.employee.name_th}}</h5>
+              <div class="col-5">
+                <button class="status" *ngIf="item.status == 'PENDING'">รออนุมัติ</button>
+                <!-- <button class="rejected" *ngIf="item.status == 'REJECTED'">ไม่อนุมัติ</button>
+                <button class="approved" *ngIf="item.status == 'APPROVED'">อนุมัติ</button>
+                <button class="cancelled" *ngIf="item.status == 'CANCELLED'">ยกเลิกการลา</button> -->
               </div>
             </div>
             <div class="row">
-                <div class="col">
-                  <label class="small-text">{{item.note}}</label>
-                </div>
+              <div class="col-12 center">
+                <h5 class="card-title color-white">{{item.start_time}} - {{item.end_time}}</h5>
+              </div>
             </div>
-          </ng-container>
+            <div class="row">
+              <div class="col-6">
+                <div class="row">
+                  <div class="col-12">
+                    <h5 class="card-title color-white">{{item.reason}}</h5>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <button class="approve">ผู้อนุมัติ : {{item.leave_approvals[0]?.employee.name_th}}</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 img-profile">
+                <img class="img-profile" src="{{profile ? profile.pictureUrl : ''}}" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+
+</div>
+
+<!-- modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row mt-2 text-center">
+          <div class="col-12">
+            <h5>รายละเอียด</h5>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12 d-flex justify-content-center">
+            <img class="img-profile" src="{{profile ? profile.pictureUrl : ''}}" />
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12 text-center">
+            <h5>{{myName ? myName.name_th : ''}}</h5>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12">
+            <h5 class="card-title">{{statusPreview?.leave_type_name}}</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <!-- <label class="small-text">คงเหลือ 3 ชั่วโมง</label> -->
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12">
+            <h5>ช่วงเวลา : <label *ngIf="statusPreview?.leave_format == 'FULL'">เต็มวัน</label> <label
+                *ngIf="statusPreview?.leave_format == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label
+                *ngIf="statusPreview?.leave_format == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
+          </div>
+        </div>
+        <div class="row mt-2" *ngIf="statusPreview?.leave_format == 'FULL'">
+          <div class="col-12">
+            <h5>จำนวน : <label>{{statusPreview?.leave_hour / 8}} วัน </label></h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label class="small-text">{{statusPreview?.start_time}} - {{statusPreview?.end_time}}</label>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12">
+            <h5>เหตุผลการลา</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label class="small-text">{{statusPreview?.reason}}</label>
+          </div>
+        </div>
+        <ng-container *ngFor="let item of statusPreview?.leave_approvals; index as i">
           <div class="row mt-2">
             <div class="col-12">
-              <h5>เอกสารแนบ</h5>
+              <h5> <img src="assets/tick-circle.svg" /> ผู้อนุมัติ : {{item.employee.name_th}}</h5>
             </div>
           </div>
-          <div class="row mt-2">
-              <div class="col text-center">
-                <img *ngIf="statusPreview?.file" class="img-user-file" src="{{'https://chatbot.newdice.co/VegetableOil/staticfiles/attachments/' + statusPreview?.file}}" alt="">
-                <label class="small-text">{{statusPreview?.file ? statusPreview?.file : 'ไม่ได้แนบไฟล์'}}</label>
-              </div>
-          </div>
-          <div class="row mt-5">
-            <div class="col-12 text-center" *ngIf="statusPreview?.status == 'PENDING'">
-              <!-- data-dismiss="modal" data-toggle="modal" data-target="#exampleModalCenter1" -->
-              <button type="button" class="btn-send" (click)="send()">
-                ยกเลิกการลา
-              </button>
+          <div class="row">
+            <div class="col">
+              <label class="small-text">{{item.note}}</label>
             </div>
           </div>
-          <div class="row mt-4">
-            <div class="col text-center">
-              <button class="btn-approve" data-dismiss="modal">ปิด</button>
-            </div>
+        </ng-container>
+        <div class="row mt-2">
+          <div class="col-12">
+            <h5>เอกสารแนบ</h5>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col text-center">
+            <img *ngIf="statusPreview?.file" class="img-user-file"
+              src="{{'https://chatbot.newdice.co/VegetableOil/staticfiles/attachments/' + statusPreview?.file}}" alt="">
+            <label class="small-text">{{statusPreview?.file ? statusPreview?.file : 'ไม่ได้แนบไฟล์'}}</label>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-12 text-center" *ngIf="statusPreview?.status == 'PENDING'">
+            <!-- data-dismiss="modal" data-toggle="modal" data-target="#exampleModalCenter1" -->
+            <button type="button" class="btn-send" (click)="send()">
+              ยกเลิกการลา
+            </button>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col text-center">
+            <button class="btn-approve" data-dismiss="modal">ปิด</button>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
 
-<div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="row mt-2">
-            <div class="col-12 text-center">
-              <img src="assets/seccess-circle.svg" />
-            </div>
+<div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row mt-2">
+          <div class="col-12 text-center">
+            <img src="assets/seccess-circle.svg" />
           </div>
-          <div class="row mt-2">
-            <div class="col-12 text-center">
-              <h5>กรุณาระบุเหตุผลการยกเลิกใบลา</h5>
-            </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12 text-center">
+            <h5>กรุณาระบุเหตุผลการยกเลิกใบลา</h5>
           </div>
-          <div class="row mt-2">
-            <div class="col-12 text-center">
-              <textarea class="form-coltrol textarea" placeholder="เหตุผลที่ยกเลิกการลา" rows="5" [(ngModel)]="note"></textarea>
-            </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-12 text-center">
+            <textarea class="form-coltrol textarea" placeholder="เหตุผลที่ยกเลิกการลา" rows="5"
+              [(ngModel)]="note"></textarea>
           </div>
-          <div class="row mt-5">
-            <div class="col-12 text-center">
-              <button type="button" class="btn-send" data-dismiss="modal" (click)="send()">
-                บันทึก
-              </button>
-            </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-12 text-center">
+            <button type="button" class="btn-send" data-dismiss="modal" (click)="send()">
+              บันทึก
+            </button>
           </div>
         </div>
       </div>
     </div>
+  </div>
 </div>
+<ng-template #noData>
+  <h4 class="text-sarabun text-center mt-3">
+    รายการของคุณถูกอนุมัติทั้งหมดแล้ว
+
+  </h4>
+</ng-template>

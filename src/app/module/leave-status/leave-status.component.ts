@@ -75,22 +75,24 @@ export class LeaveStatusComponent implements OnInit {
         // status: "PENDING"
       }
     
-      this.leaveService.requestLeaveStatus(param).subscribe({
+      this.leaveService.requestLeaveStatusFix(param).subscribe({
         next: (res: any) => {
           // console.log(this.leaveTypeName);
-          for(let i = 0; i < res.leave.length; i++) {
+          for (let i = 0; i < res.leave.length; i++) {
             res.leave[i].start_time = moment(res.leave[i].start_time).format("DD/MM/YYYY");
             res.leave[i].end_time = moment(res.leave[i].end_time).format("DD/MM/YYYY");
             res.leave[i].leave_type_name = getObject(this.leaveTypeName, res.leave[i].type_id, 'id');
-            res.leave[i].leave_type_name = res.leave[i].leave_type_name ? res.leave[i].leave_type_name.name : null; 
-            const data = moment(res.leave[i].start_time).diff(res.leave[i].end_time,'days');
-              this.dataDays.push(data);
+            res.leave[i].leave_type_name = res.leave[i].leave_type_name ? res.leave[i].leave_type_name.name : null;
+            const data = moment(res.leave[i].start_time).diff(res.leave[i].end_time, 'days');
+            this.dataDays.push(data);
           }
-  
-          this.dataLeave = res.leave
+      
+          // Filter 'PENDING' status before assigning to dataLeave
+          this.dataLeave = res.leave.filter((leaveItem: any) => leaveItem.status === 'PENDING');
+      
           this.myName = res.user;
-          // console.log(this.dataLeave);
-          resolve(1)
+          console.log(this.dataLeave);
+          resolve(1);
         }
       })
     })

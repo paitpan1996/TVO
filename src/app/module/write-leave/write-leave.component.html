@@ -174,6 +174,11 @@
               <label >{{filePreview ? filePreview : 'ไม่ได้แนบไฟล์'}}</label>
             </div>
         </div>
+        <div class="row" *ngIf="filePreview">
+          <div class="col-12 text-center">
+            <button class="btn-delete">ลบไฟล์แนบ</button>
+          </div>
+        </div>
         <div class="row mt-5">
           <div class="col-12 text-center">
             <button type="button" class="btn-send" data-dismiss="modal" (click)="sendLeave()">

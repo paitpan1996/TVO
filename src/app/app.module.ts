@@ -25,6 +25,7 @@ import { BookMeetRoomComponent } from './module-room/book-meet-room/book-meet-ro
 import { HistoryRoomComponent } from './module-room/history-room/history-room.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LeaveHistoryComponent } from './module/leave-history/leave-history.component';
+import { MedicalHistoryComponent } from './module/medical-history/medical-history.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { LeaveHistoryComponent } from './module/leave-history/leave-history.comp
     SubHistoryComponent,
     BookMeetRoomComponent,
     HistoryRoomComponent,
-    LeaveHistoryComponent
+    LeaveHistoryComponent,
+    MedicalHistoryComponent
   ],
   imports: [
     BrowserModule,
