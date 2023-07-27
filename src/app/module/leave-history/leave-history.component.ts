@@ -83,6 +83,13 @@ export class LeaveHistoryComponent implements OnInit {
             res.leave[i].end_time = moment(res.leave[i].end_time).format("DD/MM/YYYY");
             res.leave[i].leave_type_name = getObject(this.leaveTypeName, res.leave[i].type_id, 'id');
             res.leave[i].leave_type_name = res.leave[i].leave_type_name ? res.leave[i].leave_type_name.name : null; 
+            if(res.leave[i].leave_format === 'FULL') {
+              res.leave[i].leave_format = 'เต็มวัน';
+            }else if(res.leave[i].leave_format === 'HALF_MORNING') {
+              res.leave[i].leave_format = 'ครึ่งวันเช้า';
+            }else if(res.leave[i].leave_format === 'HALF_NOON') {
+              res.leave[i].leave_format = 'ครึ่งวันบ่าย';
+            }
             const data = moment(res.leave[i].start_time).diff(res.leave[i].end_time,'days');
               this.dataDays.push(data);
           }
