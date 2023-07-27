@@ -54,7 +54,9 @@ export class HistoryLeaveComponent {
           if(res.history[i].type_id == this.leaveId) {
             res.history[i].start_time = moment(res.history[i].start_time).format('DD/MM/YYYY');
             res.history[i].end_time = moment(res.history[i].end_time).format('DD/MM/YYYY');
-            this.data.push(res.history[i]);
+            if(res.history[i].status == 'APPROVED') {
+              this.data.push(res.history[i]);
+            }
           }
         }
         setTimeout(() => {

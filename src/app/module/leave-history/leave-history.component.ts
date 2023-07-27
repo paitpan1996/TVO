@@ -87,7 +87,7 @@ export class LeaveHistoryComponent implements OnInit {
               this.dataDays.push(data);
           }
   
-          this.dataLeave = res.leave
+          this.dataLeave = res.leave.filter((leaveItem: any) => leaveItem.status !== 'PENDING');
           this.myName = res.user;
           // console.log(this.dataLeave);
           resolve(1)

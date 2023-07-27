@@ -69,9 +69,9 @@ ngOnInit() {
 
 getInitLeaveData() {
   const param = {
-    // line_id: this.profile?.userId
+    line_id: this.profile?.userId
     // line_id: 'U415bef6926c6126ae6b7370e46714288'
-    line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37',
+    // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37',
   }
 
   this.leaveService.getInitLeaveData(param).subscribe({
@@ -219,9 +219,9 @@ sendLeave() {
       next: (res: any) => {
         this.yourFile = res.filename;
         const param = {
-          // line_id: this.profile?.userId,
+          line_id: this.profile?.userId,
           // line_id: 'U415bef6926c6126ae6b7370e46714288',
-          line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37',
+          // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37',
           reason: this.desc ? this.desc : 'ไม่ได้ระบุเหตุผล',
           type_id: +this.leaveType,
           leave_format: this.type,
@@ -261,9 +261,9 @@ sendLeave() {
     })
   } else {
     const param = {
-      // line_id: this.profile?.userId,
+      line_id: this.profile?.userId,
       // line_id: 'U415bef6926c6126ae6b7370e46714288',
-      line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37',
+      // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37',
       reason: this.desc ? this.desc : 'ไม่ได้ระบุเหตุผล',
       type_id: +this.leaveType,
       leave_format: this.type,
