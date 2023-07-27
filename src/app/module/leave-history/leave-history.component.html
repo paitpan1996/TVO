@@ -27,9 +27,20 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-12">
-                    <button class="approve">ผู้อนุมัติ : {{item.leave_approvals[0]?.employee.name_th}}</button>
-                  </div>
+                  <ng-container *ngIf="item.leave_approvals.length > 1; else noneNote">
+                    <div class="col-12">
+                      <ng-container *ngFor="let item1 of item.leave_approvals">
+                        <button class="approve" *ngIf="item1.note">ผู้อนุมัติ : {{item1.note ? item1.employee.name_th : ''}}</button>
+                      </ng-container>
+                    </div>
+                  </ng-container>
+                  <ng-template #noneNote>
+                    <div class="col-12">
+                      <ng-container *ngFor="let item1 of item.leave_approvals">
+                        <button class="approve">ผู้อนุมัติ : {{item1.employee.name_th}}</button>
+                      </ng-container>
+                    </div>
+                  </ng-template>
                 </div>
               </div>
               <div class="col-6 img-profile">
