@@ -231,8 +231,9 @@ export class ApproveStatusComponent implements OnInit {
         if (err.error.error) {
           Swal.fire({
             position: 'center',
-            icon: 'error',
-            title: 'เกิดข้อผิดพลาด !',
+            // icon: 'error',
+            imageUrl: 'https://chatbot.newdice.co/VegetableOil/staticfiles/resources/img/hourglass.png',
+            title: 'รออนุมัติจากผู้บังคับบัญชาลำดับก่อนหน้า!',
             text: err.error.error,
             showConfirmButton: true,
             confirmButtonText: 'ตกลง',
