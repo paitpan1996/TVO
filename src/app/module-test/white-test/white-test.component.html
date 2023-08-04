@@ -1,0 +1,192 @@
+<div class="container-fluid">
+    <div class="row mt-4">
+      <div class="col-12">
+        <ng-select placeholder="ประเภทการลา..."
+        [items]="sort"
+        bindLabel="name"
+        bindValue="id"
+        [(ngModel)]="leaveType"
+        (change)="getDataLeave()"></ng-select>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col"*ngIf="[10,12].includes(leaveType)"> ลาได้ตามใบรับรองแพทย์</div>
+      <div class="col" *ngIf="![10,12].includes(leaveType)">คงเหลือ : {{dateQuota}}</div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-3">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="type" id="type1" value="FULL" [(ngModel)]="type"/>
+          <label class="form-check-label" for="type1"> เต็มวัน </label>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="type" id="type2" value="HALF_MORNING" (change)="resetDate()" [(ngModel)]="type"/>
+          <label class="form-check-label" for="type2"> ครึ่งวันเช้า </label>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="type" id="type3" value="HALF_NOON" (change)="resetDate()" [(ngModel)]="type"/>
+          <label class="form-check-label" for="type3"> ครึ่งวันบ่าย </label>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="type == 'FULL' else HALF ">
+      <div class="row mt-2">
+        <div class="col-12">
+          <label>จากวันที่</label>
+          <input type="date" class="form-control" placeholder="วันเริ่ม" [(ngModel)]="startDate"/>
+          </div>
+        </div>
+        <div class="row mt-2">
+        <div class="col-12">
+          <label>ถึงวันที่</label>
+          <input type="date" class="form-control" placeholder="จนถึง" [(ngModel)]="endDate"/>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #HALF>
+      <div class="row mt-2">
+        <div class="col-12">
+          <label>เลือกวันที่</label>
+          <input type="date" class="form-control" placeholder="เลือกวันที่" [(ngModel)]="startDate" [(ngModel)]="endDate" />
+        </div>
+      </div>
+    </ng-template>
+    <div class="row mt-2">
+      <div class="col-12">
+        <textarea class="form-control" rows="5" placeholder="เหตุผลการลา" [(ngModel)]="desc"></textarea>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-12">
+        <button class="btn-upload" (click)="fileUpload.click()">เอกสารแนบ</button>
+        <input type="file" (change)="getFile($event)" accept=".pdf, .png" #fileUpload hidden/> <br />
+        <label >{{ filePreview ? filePreview : 'รับรองไฟล์ PDF หรือ PNG ขนาดไฟล์ต้องไม่เกิน 5 mb'}}</label>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-12 text-center">
+        <button  type="button" class="btn-send" data-toggle="modal" data-target="#exampleModalCenter" (click)="setFromat()">
+          ส่งใบลา
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row mt-2 text-center">
+            <div class="col-12">
+              <h5>รายละเอียด</h5>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col text-center">
+              <img class="img-profile" src="{{profile ? profile.pictureUrl : ''}}" alt="">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12 text-center">
+              <h5>{{myName ? myName.name_th : ''}}</h5>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <h5>{{leaveTypePreview}}</h5>
+            </div>
+          </div>
+          <!-- <div class="row">
+            <div class="col-12">
+              <label ></label>
+            </div>
+          </div> -->
+          <div class="row mt-2">
+            <div class="col-12">
+              <h5>ช่วงเวลา : <label  *ngIf="type == 'FULL'">เต็มวัน</label> <label  *ngIf="type == 'HALF_MORNING'">ครึ่งวันเช้า</label> <label  *ngIf="type == 'HALF_NOON'">ครึ่งวันบ่าย</label></h5>
+            </div>
+          </div>
+          <!-- <div class="row mt-2"  *ngIf="type == 'FULL'">
+            <div class="col-12">
+              <h5>จำนวน : <label> {{date == 0 ? 1 : date + 1}} วัน</label></h5>
+            </div>
+          </div> -->
+          <!-- <ng-container *ngIf="type == '1'"> -->
+            <!-- <div class="row">
+              <div class="col">
+                &nbsp;  <label  *ngIf="type == 'FULL'">เต็มวัน</label>
+                &nbsp;  <label  *ngIf="type == 'HALF_MORNING'">ครึ่งวันเช้า</label>
+                &nbsp;  <label  *ngIf="type == 'HALF_NOON'">ครึ่งวันบ่าย</label>
+              </div>
+            </div> -->
+            <div class="row">
+              <div class="col">
+                &nbsp;  <label >{{startDatePerview}} - {{endDatePreview}}</label>
+              </div>
+            </div>
+          <!-- </ng-container> -->
+          <!-- <ng-container *ngIf="type == '2'">
+            <div class="row">
+              <div class="col">
+                <label >{{startTime}} - {{endTime}}</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label >{{date}}</label>
+              </div>
+            </div>
+          </ng-container> -->
+          <div class="row mt-2">
+            <div class="col-12">
+              <h5>เหตุผลการลา</h5>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col">
+                &nbsp;  <label >{{desc ? desc : 'ไม่ได้ระบุเหตุผล'}}</label>
+              </div>
+          </div>
+          <ng-container *ngFor="let item of approverList; index as i">
+            <div class="row mt-2">
+              <div class="col-12">
+                <h5> <img src="assets/tick-circle.svg" /> ผู้อนุมัติ : {{item.approverAssoc?.name_th}}</h5>
+              </div>
+          </div>
+        </ng-container>
+          <div class="row mt-2">
+            <div class="col-12">
+              <h5>เอกสารแนบ</h5>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col text-center">
+                <img class="img-preview" src="{{url}}" alt="">
+              </div>
+          </div>
+          <div class="row">
+              <div class="col text-center">
+                <label >{{filePreview ? filePreview : 'ไม่ได้แนบไฟล์'}}</label>
+              </div>
+          </div>
+          <div class="row" *ngIf="filePreview">
+            <div class="col-12 text-center">
+              <button class="btn-delete">ลบไฟล์แนบ</button>
+            </div>
+          </div>
+          <div class="row mt-5">
+            <div class="col-12 text-center">
+              <button type="button" class="btn-send" data-dismiss="modal" (click)="sendLeave()">
+                ยืนยันการส่ง
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

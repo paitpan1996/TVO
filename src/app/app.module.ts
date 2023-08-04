@@ -26,6 +26,7 @@ import { HistoryRoomComponent } from './module-room/history-room/history-room.co
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LeaveHistoryComponent } from './module/leave-history/leave-history.component';
 import { MedicalHistoryComponent } from './module/medical-history/medical-history.component';
+import { WhiteTestComponent } from './module-test/white-test/white-test.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { MedicalHistoryComponent } from './module/medical-history/medical-histor
     BookMeetRoomComponent,
     HistoryRoomComponent,
     LeaveHistoryComponent,
-    MedicalHistoryComponent
+    MedicalHistoryComponent,
+    WhiteTestComponent
   ],
   imports: [
     BrowserModule,

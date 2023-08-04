@@ -48,11 +48,11 @@ export class LeaveHistoryComponent implements OnInit {
   getInitLeaveData() {
     return new Promise<any>((resolve, reject) => {
       const param = {
-        // line_id: this.profile?.userId
+        line_id: this.profile?.userId
         // line_id: 'U415bef6926c6126ae6b7370e46714288'
         // line_id: 'Uab6620e68248620f8c554228f90595b6'
         // line_id: 'U29b0687712ba81f325cdd94daf68fac4'
-        line_id: 'U4c745e1cbb6d50a34e7309e69943115b' // ลูกค้า
+        // line_id: 'U4c745e1cbb6d50a34e7309e69943115b' // ลูกค้า
       }
     
       this.leaveService.getInitLeaveData(param).subscribe({
@@ -69,11 +69,11 @@ export class LeaveHistoryComponent implements OnInit {
   requestLeaveStatus() {
     return new Promise<any>((resolve, reject) => {
       const param = {
-        // line_id: this.profile?.userId,
+        line_id: this.profile?.userId,
         // line_id: "U415bef6926c6126ae6b7370e46714288",
         // line_id: "Uab6620e68248620f8c554228f90595b6",
         // line_id: "U29b0687712ba81f325cdd94daf68fac4",
-        line_id: 'U4c745e1cbb6d50a34e7309e69943115b' //ลูกค้า
+        // line_id: 'U4c745e1cbb6d50a34e7309e69943115b' //ลูกค้า
         // status: "PENDING"
       }
     
@@ -115,9 +115,9 @@ export class LeaveHistoryComponent implements OnInit {
 
   send() {
     const param = {
-      // line_id: this.profile?.userId,
+      line_id: this.profile?.userId,
       // line_id: 'U415bef6926c6126ae6b7370e46714288',
-      line_id: 'U4c745e1cbb6d50a34e7309e69943115b', // ลูกค้า
+      // line_id: 'U4c745e1cbb6d50a34e7309e69943115b', // ลูกค้า
       leave_id: this.statusPreview?.id,
       // note: this.note ? this.note : ''
     }

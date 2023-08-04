@@ -12,6 +12,7 @@ import { LeaveStatusComponent } from './module/leave-status/leave-status.compone
 import { WriteLeaveComponent } from './module/write-leave/write-leave.component';
 import { LeaveHistoryComponent } from './module/leave-history/leave-history.component';
 import { MedicalHistoryComponent } from './module/medical-history/medical-history.component';
+import { WhiteTestComponent } from './module-test/white-test/white-test.component';
 
 const routes: Routes = [
   { path: 'write-leave' , component: WriteLeaveComponent },
@@ -25,7 +26,8 @@ const routes: Routes = [
   { path: 'book-meet' , component: BookMeetRoomComponent },
   { path: 'book-history' , component: HistoryRoomComponent },
   { path: 'leave-history' , component: LeaveHistoryComponent },
-  { path: 'medical-history', component: MedicalHistoryComponent}
+  { path: 'medical-history', component: MedicalHistoryComponent},
+  { path: 'test-whitepage', component: WhiteTestComponent},
 ];
 
 @NgModule({
