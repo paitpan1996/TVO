@@ -43,7 +43,7 @@ export class MedicalHistoryComponent implements OnInit {
 
       this.medicalService.getMedicalHistory(param).subscribe({
         next: (res: any) => {
-          console.log(res);
+          // console.log(res);
           for(let i = 0; i < res.length; i++) {
             res[i].healthdate_ = moment(res[i].healthdate_).format("DD/MM/YYYY");
           }

@@ -166,7 +166,7 @@ getFile(fileInput: any) {
   const file = fileInput.target.files[0];
 
   // Log the selected file object to the console
-  console.log(file);
+  // console.log(file);
 
   // Store the file name for display or further processing
   this.filePreview = file.name;

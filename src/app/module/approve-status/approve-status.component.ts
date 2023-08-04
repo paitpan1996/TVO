@@ -85,6 +85,11 @@ export class ApproveStatusComponent implements OnInit {
 
     this.leaveService.requestLeaveStatusFix(param).subscribe({
       next: (res: any) => {
+        let thisUserPriority = null;
+        let currentPendingPriority = null;
+        let PriorityOneState = false;
+        let PriorityTwoState = false;
+        let PriorityThreeState = false;
         for (let i = 0; i < res.approve.length; i++) {
           const leave = res.approve[i].leave;
           leave.start_time = moment(leave.start_time).format('DD/MM/YYYY');
@@ -93,96 +98,31 @@ export class ApproveStatusComponent implements OnInit {
           leave.leave_type_name = leave.leave_type_name ? leave.leave_type_name.name : null;
 
           const leaveApprovals = leave.leave_approvals;
-
-          if (leaveApprovals[0]) {
-            const firstApprover = leaveApprovals[0];
-            if (firstApprover.approver_id !== res.user.id && firstApprover.approver_approver_priority === 1) {
-              console.log("ผู้อนุมัติขั้นแรกไม่ใช่คุณ");
-            } else if (firstApprover.approver_id === res.user.id && firstApprover.approver_approver_priority === 1) {
-              console.log("ผู้อนุมัติขั้นแรกคือคุณ");
+          for (let j = 0; j < leaveApprovals.length; j++) {
+            if (leaveApprovals[j].result == 'PENDING' && leaveApprovals[j].approver_id == res.user.id) {
+              thisUserPriority = leaveApprovals[j].approver_priority;
+            }
+            if (leaveApprovals[j].result == 'PENDING' && leaveApprovals[j].approver_priority == 1) {
+              PriorityOneState = true;
+              currentPendingPriority = 1;
+              break;
+            } else if (leaveApprovals[j].result == 'PENDING' && leaveApprovals[j].approver_priority == 2) {
+              PriorityTwoState = true;
+              currentPendingPriority = 2;
+              break;
+            } else if (leaveApprovals[j].result == 'PENDING' && leaveApprovals[j].approver_priority == 3) {
+              PriorityThreeState = true;
+              currentPendingPriority = 3;
+              break;
             }
           }
-
-          if (leaveApprovals[1]) {
-            const secondApprover = leaveApprovals[1];
-            if (secondApprover.approver_id !== res.user.id && secondApprover.approver_approver_priority === 2) {
-              console.log("ผู้อนุมัติขั้นสองไม่ใช่คุณ");
-            } else if (secondApprover.approver_id === res.user.id && secondApprover.approver_approver_priority === 2) {
-              console.log("ผู้อนุมัติขั้นสองคือคุณ");
-            }
-          }
-
-          if (leaveApprovals[2]) {
-            const thirdApprover = leaveApprovals[2];
-            if (thirdApprover.approver_id !== res.user.id && thirdApprover.approver_approver_priority === 3) {
-              console.log("ผู้อนุมัติขั้นสามไม่ใช่คุณ");
-            } else if (thirdApprover.approver_id === res.user.id && thirdApprover.approver_approver_priority === 3) {
-              console.log("ผู้อนุมัติขั้นสามคือคุณ");
-            }
-          }
-
-          
         }
-        this.dataLeave = res.approve;
+        if (thisUserPriority == currentPendingPriority) {
+          this.dataLeave = res.approve;
           this.myName = res.user;
-          console.log(res);
-          console.log(res.approve);
+        }
       }
     });
-
-
-
-    // this.leaveService.requestLeaveStatus(param).subscribe({
-    //   next: (res: any) => {
-    //     for(let i = 0; i < res.approve.length; i++) {
-    //       res.approve[i].leave.start_time = moment(res.approve[i].leave.start_time).format('DD/MM/YYYY');
-    //       res.approve[i].leave.end_time = moment(res.approve[i].leave.end_time).format('DD/MM/YYYY');
-    //       res.approve[i].leave.leave_type_name = getObject(this.leaveTypeName, res.approve[i].leave.type_id, 'id');
-    //       res.approve[i].leave.leave_type_name = res.approve[i].leave.leave_type_name ? res.approve[i].leave.leave_type_name.name : null; 
-    //       if(res.approve[i].leave.leave_approvals[0]){
-    //         if(res.approve[i].leave.leave_approvals[0].approver_id != res.user.id && res.approve[i].leave.leave_approvals[0].approver_approver_priority == 1){
-    //           console.log("ผู้อนุมัติขั้นแรกไม่ใช่คุณ");
-    //         }else if(res.approve[i].leave.leave_approvals[0].approver_id == res.user.id && res.approve[i].leave.leave_approvals[0].approver_approver_priority == 1){
-    //           console.log("ผู้อนุมัติขั้นแรกคือคุณ");
-    //         }
-    //       }
-    //       if(res.approve[i].leave.leave_approvals[1]){
-    //         if(res.approve[i].leave.leave_approvals[1].approver_id != res.user.id && res.approve[i].leave.leave_approvals[1].approver_approver_priority == 2){
-    //           console.log("ผู้อนุมัติขั้นสองไม่ใช่คุณ");
-    //         }else if(res.approve[i].leave.leave_approvals[1].approver_id == res.user.id && res.approve[i].leave.leave_approvals[1].approver_approver_priority == 2){
-    //           console.log("ผู้อนุมัติขั้นสองคือคุณ");
-    //         }
-    //       }
-    //       if(res.approve[i].leave.leave_approvals[2]){
-    //         if(res.approve[i].leave.leave_approvals[2].approver_id != res.user.id && res.approve[i].leave.leave_approvals[2].approver_approver_priority == 3){
-    //           console.log("ผู้อนุมัติขั้นสามไม่ใช่คุณ");
-    //         }else if(res.approve[i].leave.leave_approvals[2].approver_id == res.user.id && res.approve[i].leave.leave_approvals[2].approver_approver_priority == 3){
-    //           console.log("ผู้อนุมัติขั้นสามคือคุณ");
-    //         }
-    //       }
-
-    //       // if(res.approve[i].leave.leave_approvals[1].approver_id != res.user.id && res.approve[i].leave.leave_approvals[0].approver_approver_priority == 2){
-    //       //   console.log("ผู้อนุมัติขั้นสองไม่ใช่คุณ");
-    //       // }else if(res.approve[i].leave.leave_approvals[1].approver_id == res.user.id && res.approve[i].leave.leave_approvals[0].approver_approver_priority == 2){
-    //       //   console.log("ผู้อนุมัติขั้นสองคือคุณ");
-    //       // }
-    //       // if(res.approve[i].leave.leave_approvals[2].approver_id != res.user.id && res.approve[i].leave.leave_approvals[0].approver_approver_priority == 3){
-    //       //   console.log("ผู้อนุมัติขั้นสามไม่ใช่คุณ");
-    //       // }else if(res.approve[i].leave.leave_approvals[2].approver_id == res.user.id && res.approve[i].leave.leave_approvals[0].approver_approver_priority == 3){
-    //       //   console.log("ผู้อนุมัติขั้นสามคือคุณ");
-    //       // }
-    //       // const data = moment(res.approve[i].leave.start_time).diff(res.approve[i].leave.end_time, 'days');
-    //       // this.dataDays.push('date',data);
-    //       // console.log(data);
-    //     }
-    //     this.dataLeave = res.approve;
-    //     this.myName = res.user;
-    //     console.log(res);
-    //     console.log(res.approve);
-    //   }
-    // });
-
-
   }
 
   checkLeave(item: any) {
