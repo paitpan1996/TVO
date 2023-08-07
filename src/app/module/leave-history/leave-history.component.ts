@@ -52,12 +52,13 @@ export class LeaveHistoryComponent implements OnInit {
         // line_id: 'U415bef6926c6126ae6b7370e46714288'
         // line_id: 'Uab6620e68248620f8c554228f90595b6'
         // line_id: 'U29b0687712ba81f325cdd94daf68fac4'
-        // line_id: 'U4c745e1cbb6d50a34e7309e69943115b' // ลูกค้า
+        // line_id: 'Uc748e20222c83fdad81366bde68ba8f2' // ลูกค้า
       }
     
       this.leaveService.getInitLeaveData(param).subscribe({
         next: (res: any) => {
           // console.log(res.leaveType);
+          console.log(res);
           this.leaveTypeName = res.leaveType;
           resolve(1)
         }
@@ -73,7 +74,7 @@ export class LeaveHistoryComponent implements OnInit {
         // line_id: "U415bef6926c6126ae6b7370e46714288",
         // line_id: "Uab6620e68248620f8c554228f90595b6",
         // line_id: "U29b0687712ba81f325cdd94daf68fac4",
-        // line_id: 'U4c745e1cbb6d50a34e7309e69943115b' //ลูกค้า
+        // line_id: 'Uc748e20222c83fdad81366bde68ba8f2' //ลูกค้า
         // status: "PENDING"
       }
     
@@ -98,7 +99,7 @@ export class LeaveHistoryComponent implements OnInit {
   
           this.dataLeave = res.leave.filter((leaveItem: any) => leaveItem.status !== 'PENDING');
           this.myName = res.user;
-          // console.log(this.dataLeave);
+          console.log(res);
           resolve(1)
         }
       })
@@ -117,7 +118,7 @@ export class LeaveHistoryComponent implements OnInit {
     const param = {
       line_id: this.profile?.userId,
       // line_id: 'U415bef6926c6126ae6b7370e46714288',
-      // line_id: 'U4c745e1cbb6d50a34e7309e69943115b', // ลูกค้า
+      // line_id: 'Uc748e20222c83fdad81366bde68ba8f2', // ลูกค้า
       leave_id: this.statusPreview?.id,
       // note: this.note ? this.note : ''
     }

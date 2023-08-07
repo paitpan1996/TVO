@@ -87,10 +87,12 @@ export class ApproveStatusComponent implements OnInit {
     this.leaveService.requestLeaveStatusFix(param).subscribe({
       next: (res: any) => {
         let thisUserPriority = null;
+        let maxPriority = null;
         let currentPendingPriority = null;
         let PriorityOneState = false;
         let PriorityTwoState = false;
         let PriorityThreeState = false;
+        let leaveFilterForThisUser = [];
         for (let i = 0; i < res.approve.length; i++) {
           const leave = res.approve[i].leave;
           leave.start_time = moment(leave.start_time).format('DD/MM/YYYY');
@@ -100,25 +102,37 @@ export class ApproveStatusComponent implements OnInit {
 
           const leaveApprovals = leave.leave_approvals;
           for (let j = 0; j < leaveApprovals.length; j++) {
-            if (leaveApprovals[j].result == 'PENDING' && leaveApprovals[j].approver_id == res.user.id) {
-              thisUserPriority = leaveApprovals[j].approver_priority;
+            const approval  = leaveApprovals[j];
+            if (approval.result === 'PENDING') {
+              maxPriority = approval.approver_priority;
             }
-            if (leaveApprovals[j].result == 'PENDING' && leaveApprovals[j].approver_priority == 1) {
-              PriorityOneState = true;
+            if (approval.result === 'PENDING' && approval.approver_id === res.user.id) {
+              thisUserPriority = approval.approver_priority;
+            }
+
+            if (approval.result === 'APPROVED') {
+              if (approval.approver_priority === 1) {
+                PriorityOneState = true;
+              } else if (approval.approver_priority === 2) {
+                PriorityTwoState = true;
+              } else if (approval.approver_priority === 3) {
+                PriorityThreeState = true;
+              }
+            }
+            if (!PriorityOneState) {
               currentPendingPriority = 1;
-            } else if (leaveApprovals[j].result == 'PENDING' && leaveApprovals[j].approver_priority == 2) {
-              PriorityTwoState = true;
+            } else if (!PriorityTwoState) {
               currentPendingPriority = 2;
-            } else if (leaveApprovals[j].result == 'PENDING' && leaveApprovals[j].approver_priority == 3) {
-              PriorityThreeState = true;
+            } else if (!PriorityThreeState) {
               currentPendingPriority = 3;
             }
           }
+          if (thisUserPriority === currentPendingPriority) {
+            leaveFilterForThisUser.push(res.approve[i]);
+          }
         }
-        if (thisUserPriority == currentPendingPriority) {
-          this.dataLeave = res.approve;
-          this.myName = res.user;
-        }
+        this.dataLeave = leaveFilterForThisUser
+        this.myName = res.user;
       }
     });
   }
