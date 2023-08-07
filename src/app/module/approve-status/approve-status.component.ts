@@ -24,6 +24,7 @@ export class ApproveStatusComponent implements OnInit {
   datePreview: any;
   data: any;
   namePreview: any;
+  lineTokenTest: any;
 
   constructor(private leaveService: LeaveService) { }
 
@@ -61,7 +62,7 @@ export class ApproveStatusComponent implements OnInit {
         // line_id: 'Uab6620e68248620f8c554228f90595b6'
         // line_id: 'U29b0687712ba81f325cdd94daf68fac4' // พี่คิง
         // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37' // แชมป์
-        // line_id: 'U4c745e1cbb6d50a34e7309e69943115b' // ลูกค้า สำหรับเทส
+        // line_id: 'U994cca624af9a77d7a031272ed3c539c' // ลูกค้า สำหรับเทส
       }
 
       this.leaveService.getInitLeaveData(param).subscribe({
@@ -80,7 +81,7 @@ export class ApproveStatusComponent implements OnInit {
       // line_id: 'U415bef6926c6126ae6b7370e46714288'
       // line_id: 'U29b0687712ba81f325cdd94daf68fac4' // พี่คิง
       // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37' // แชมป์
-      // line_id: 'U4c745e1cbb6d50a34e7309e69943115b' // ลูกค้า สำหรับเทส
+      // line_id: 'U994cca624af9a77d7a031272ed3c539c' // ลูกค้า สำหรับเทส
     }
 
     this.leaveService.requestLeaveStatusFix(param).subscribe({
@@ -105,15 +106,12 @@ export class ApproveStatusComponent implements OnInit {
             if (leaveApprovals[j].result == 'PENDING' && leaveApprovals[j].approver_priority == 1) {
               PriorityOneState = true;
               currentPendingPriority = 1;
-              break;
             } else if (leaveApprovals[j].result == 'PENDING' && leaveApprovals[j].approver_priority == 2) {
               PriorityTwoState = true;
               currentPendingPriority = 2;
-              break;
             } else if (leaveApprovals[j].result == 'PENDING' && leaveApprovals[j].approver_priority == 3) {
               PriorityThreeState = true;
               currentPendingPriority = 3;
-              break;
             }
           }
         }
@@ -129,7 +127,7 @@ export class ApproveStatusComponent implements OnInit {
     this.namePreview = item.employee.name_th
     const param = {
       approver_line_id: this.profile?.userId,
-      // approver_line_id: 'U4c745e1cbb6d50a34e7309e69943115b',
+      // approver_line_id: 'U994cca624af9a77d7a031272ed3c539c', // ลูกค้า สำหรับเทส
       employee_id: item.employee_id
     }
 
@@ -147,7 +145,7 @@ export class ApproveStatusComponent implements OnInit {
       // line_id: 'U415bef6926c6126ae6b7370e46714288',
       // line_id: 'U29b0687712ba81f325cdd94daf68fac4', // พี่คิง
       // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37', // แชมป์
-      // line_id: 'U4c745e1cbb6d50a34e7309e69943115b', // ลูกค้า สำหรับเทส
+      // line_id: 'U994cca624af9a77d7a031272ed3c539c', // ลูกค้า สำหรับเทส
       leave_id: item.id,
       result: 'APPROVED'
     }
@@ -209,7 +207,7 @@ export class ApproveStatusComponent implements OnInit {
         // line_id: 'U415bef6926c6126ae6b7370e46714288',
         // line_id: 'U29b0687712ba81f325cdd94daf68fac4', // พี่คิง
         // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37', // แชมป์
-        // line_id: 'U4c745e1cbb6d50a34e7309e69943115b', // ลูกค้า สำหรับเทส
+        // line_id: 'U994cca624af9a77d7a031272ed3c539c', // ลูกค้า สำหรับเทส
         leave_id: this.param.id,
         result: 'REJECTED',
         note: this.note
