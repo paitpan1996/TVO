@@ -52,7 +52,7 @@ constructor(
 ) { }
 
 ngOnInit() {
-  liff.init({liffId:'1657746390-LeORq250'}).then(()=>{
+  liff.init({liffId:'2000308881-Ljw6m3Vo'}).then(()=>{
     this.os=liff.getOS();
     if(liff.isLoggedIn()){
       liff.getProfile().then( profile =>{
@@ -122,7 +122,7 @@ resetDate() {
   this.endDate = moment().format('YYYY-MM-DD');
 }
 
-setFromat() {
+setFormat() {
   // let leaveTypePreview = ''
   // for(let i = 0; i < this.leaveTypeName; i++) {
   //   if(this.leaveType == this.leaveTypeName[i].id) {

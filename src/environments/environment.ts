@@ -3,10 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 const path = 'https://chatbot.newdice.co/VegetableOil/';
-
+const developmentPath = 'https://cb.ndev1.newdice.co/VegetableOil/';
 export const environment = {
   production: false,
-  path,
+  path : developmentPath,
 };
 
 /*

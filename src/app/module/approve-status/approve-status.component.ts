@@ -34,7 +34,7 @@ export class ApproveStatusComponent implements OnInit {
   note!: string;
 
   ngOnInit(): void {
-    liff.init({ liffId: '1657746390-LeORq250' }).then(() => {
+    liff.init({ liffId: '2000308881-Ljw6m3Vo' }).then(() => {
       this.os = liff.getOS();
       if (liff.isLoggedIn()) {
         liff.getProfile().then(async profile => {
@@ -62,7 +62,7 @@ export class ApproveStatusComponent implements OnInit {
         // line_id: 'Uab6620e68248620f8c554228f90595b6'
         // line_id: 'U29b0687712ba81f325cdd94daf68fac4' // พี่คิง
         // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37' // แชมป์
-        // line_id: 'U994cca624af9a77d7a031272ed3c539c' // ลูกค้า สำหรับเทส
+        // line_id: 'U332330c41c5f38b127179127902d4ce4' // ลูกค้า สำหรับเทส
       }
 
       this.leaveService.getInitLeaveData(param).subscribe({
@@ -81,7 +81,7 @@ export class ApproveStatusComponent implements OnInit {
       // line_id: 'U415bef6926c6126ae6b7370e46714288'
       // line_id: 'U29b0687712ba81f325cdd94daf68fac4' // พี่คิง
       // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37' // แชมป์
-      // line_id: 'U994cca624af9a77d7a031272ed3c539c' // ลูกค้า สำหรับเทส
+      // line_id: 'U332330c41c5f38b127179127902d4ce4' // ลูกค้า สำหรับเทส
     }
 
     this.leaveService.requestLeaveStatusFix(param).subscribe({
@@ -141,7 +141,7 @@ export class ApproveStatusComponent implements OnInit {
     this.namePreview = item.employee.name_th
     const param = {
       approver_line_id: this.profile?.userId,
-      // approver_line_id: 'U994cca624af9a77d7a031272ed3c539c', // ลูกค้า สำหรับเทส
+      // approver_line_id: 'U332330c41c5f38b127179127902d4ce4', // ลูกค้า สำหรับเทส
       employee_id: item.employee_id
     }
 
@@ -159,7 +159,7 @@ export class ApproveStatusComponent implements OnInit {
       // line_id: 'U415bef6926c6126ae6b7370e46714288',
       // line_id: 'U29b0687712ba81f325cdd94daf68fac4', // พี่คิง
       // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37', // แชมป์
-      // line_id: 'U994cca624af9a77d7a031272ed3c539c', // ลูกค้า สำหรับเทส
+      // line_id: 'U332330c41c5f38b127179127902d4ce4', // ลูกค้า สำหรับเทส
       leave_id: item.id,
       result: 'APPROVED'
     }
@@ -221,7 +221,7 @@ export class ApproveStatusComponent implements OnInit {
         // line_id: 'U415bef6926c6126ae6b7370e46714288',
         // line_id: 'U29b0687712ba81f325cdd94daf68fac4', // พี่คิง
         // line_id: 'U6760dfe320d5c3cd6418a8780c8f5f37', // แชมป์
-        // line_id: 'U994cca624af9a77d7a031272ed3c539c', // ลูกค้า สำหรับเทส
+        // line_id: 'U332330c41c5f38b127179127902d4ce4', // ลูกค้า สำหรับเทส
         leave_id: this.param.id,
         result: 'REJECTED',
         note: this.note

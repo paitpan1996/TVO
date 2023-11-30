@@ -28,7 +28,7 @@ export class HistoryLeaveComponent {
   data: any = [];
 
   ngOnInit(): void {
-    liff.init({liffId:'1657746390-LeORq250'}).then(()=>{
+    liff.init({liffId:'2000308881-Ljw6m3Vo'}).then(()=>{
       this.os=liff.getOS();
       if(liff.isLoggedIn()){
         liff.getProfile().then( profile =>{

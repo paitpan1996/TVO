@@ -13,6 +13,7 @@ import { WriteLeaveComponent } from './module/write-leave/write-leave.component'
 import { LeaveHistoryComponent } from './module/leave-history/leave-history.component';
 import { MedicalHistoryComponent } from './module/medical-history/medical-history.component';
 import { WhiteTestComponent } from './module-test/white-test/white-test.component';
+import { CreateOtComponent } from './module-ot/create-ot/create-ot.component';
 
 const routes: Routes = [
   { path: 'write-leave' , component: WriteLeaveComponent },
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'leave-history' , component: LeaveHistoryComponent },
   { path: 'medical-history', component: MedicalHistoryComponent},
   { path: 'test-whitepage', component: WhiteTestComponent},
+  { path: 'ot-create', component: CreateOtComponent}
 ];
 
 @NgModule({

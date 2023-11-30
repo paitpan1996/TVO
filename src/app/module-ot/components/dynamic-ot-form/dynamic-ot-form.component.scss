@@ -1,0 +1,30 @@
+.btn {
+    height: 49px;
+    border-radius: 10px;
+}
+
+.text-success {
+    color: #00833F;
+}
+
+.form-control {
+    height: 49px;
+    border: 1px solid #707070;
+    border-radius: 10px;
+}
+
+.custom-select {
+    /* Add your custom styles here */
+    border: 1px solid #707070;
+    border-radius: 10px;
+    height: 49px;
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+.custom-select:focus {
+    /* Add custom styles for focus state */
+    border-color: black;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}

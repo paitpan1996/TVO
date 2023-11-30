@@ -1,0 +1,25 @@
+<div class="row mt-3">
+    <div class="col-12">
+      <input type="text" class="form-control" placeholder="งานที่ปฏิบัติ">
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-6">
+      <input type="time" class="form-control" placeholder="เวลาที่เริ่ม">
+    </div>
+    <div class="col-6">
+      <input type="time" class="form-control" placeholder="เวลาที่เลิก">
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-6">
+      <input type="text" class="form-control" placeholder="-" disabled>
+    </div>
+    <div class="col-6">
+      <div class="form-group">
+        <select class="custom-select" name="" id="">
+          <option *ngFor="let otType of otTypes" [value]="otType.id">{{ otType.name }}</option>
+        </select>
+      </div>
+    </div>
+  </div>

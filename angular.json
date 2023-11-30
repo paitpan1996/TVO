@@ -31,7 +31,13 @@
             ],
             "styles": [
               "@angular/material/prebuilt-themes/pink-bluegrey.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/font-awesome/css/font-awesome.min.css"
+            ],
+            "allowedCommonJsDependencies": [
+              "sweetalert2",
+              "moment",
+              "@line/liff/dist/lib"
             ],
             "scripts": []
           },

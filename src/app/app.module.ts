@@ -27,6 +27,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LeaveHistoryComponent } from './module/leave-history/leave-history.component';
 import { MedicalHistoryComponent } from './module/medical-history/medical-history.component';
 import { WhiteTestComponent } from './module-test/white-test/white-test.component';
+import { CreateOtComponent } from './module-ot/create-ot/create-ot.component';
+import { OtSelectTypeComponent } from './module-ot/components/ot-select-type/ot-select-type.component';
+import { DynamicOtFormComponent } from './module-ot/components/dynamic-ot-form/dynamic-ot-form.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,10 @@ import { WhiteTestComponent } from './module-test/white-test/white-test.componen
     HistoryRoomComponent,
     LeaveHistoryComponent,
     MedicalHistoryComponent,
-    WhiteTestComponent
+    WhiteTestComponent,
+    CreateOtComponent,
+    OtSelectTypeComponent,
+    DynamicOtFormComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,122 @@
+<div class="container-fluid">
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="type">ประเภท</label>
+                <select class="custom-select" name="type" id="type">
+                    <option value="GENERAL">พนักงานทั่วไป</option>
+                    <option value="SHIFT">พนักงานกะ</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <p class="text-success">ตารางลง OT</p>
+        </div>
+    </div>
+    <!-- Repeat the following block as needed -->
+    
+    <div id="listOtCreateForm">
+        <app-dynamic-ot-form *ngFor="let form of dynamicOtForm; let i = index" (deleteForm)="deleteFormAtIndex(i)"></app-dynamic-ot-form>
+    </div>
+    <div class="row mb-4">
+        <div class="col-sm-12">
+            <button class="btn btn-outline-success btn-block" (click)="addnewFormComponent()"><i
+                    class="fa fa-plus-circle" aria-hidden="true"></i>
+                เพิ่มตารางลงเวลา</button>
+        </div>
+    </div>
+    <hr>
+    <button class="btn btn-success btn-block pb-3" data-toggle="modal" data-target="#modelId">ส่งอนุมัติ</button>
+
+    <!-- End of repeated block -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p class="text-header-modal text-center">รายละเอียด</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p class="text-header-modal text-left">ไตรทิพย์ xxxx</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p class="text-header-modal text-left">OT ประเภท : รายเดือน</p>
+                            </div>
+                            <div class="col-sm-12">
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p class="text-success">ตารางลง OT</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="box-list px-2 py-2 font-box-list">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="d-flex justify-content-between">
+                                                <p class="text-left">sat 1 Jul 2566</p>
+                                                <p class="text-right">10:50 - 11:50</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="d-flex justify-content-between">
+                                                <p class="text-left">ตรวจเอกสาร mk1-3</p>
+                                                <p class="text-right">1 x OT 1 เท่า</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="d-flex justify-content-between">
+                                                <p class="text-left">ผู้อนุมัติ : นายกอไก่ ขอไข่</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-sm-12">
+                                        <p class="text-success text-right">12 x OT 1 เท่า</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <p class="text-success text-right">12 x OT 1.5 เท่า</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <p class="text-success text-right">12 x OT 3 เท่า</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" style="width: 214px;">ยืนยันการส่ง</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="fixed-bottom p-3">
+    <button class="btn btn-success btn-block" data-toggle="modal" data-target="#modelId">ส่งอนุมัติ</button>
+</div> -->

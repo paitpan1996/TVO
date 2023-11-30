@@ -1,20 +1,18 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MedicalService {
-  url = environment.path;
-  medical = 'api/external/'
-  constructor(
-    private http: HttpClient
-  ) {}
+  private readonly url: string = environment.path;
+  private readonly medical: string = 'api/external/';
 
-  getMedicalHistory(param: any) {
-    return this.http.post(this.url + this.medical + 'getMedicalHistory', param);
+  constructor(private http: HttpClient) {}
+
+  getMedicalHistory(param: any): Observable<any> {
+    return this.http.post<any>(`${this.url}${this.medical}getMedicalHistory`, param);
   }
 }
